@@ -149,3 +149,4 @@ coverage.xml
 .pytest_cache/
 
 config.env
+postgres_config.env

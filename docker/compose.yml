@@ -11,3 +11,41 @@ services:
       - ../:/app:cached
     env_file:
       - config.env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    env_file:
+      - postgres_config.env
+    volumes: 
+      - db:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    env_file:
+      - postgres_config.env
+    volumes:
+       - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    restart: always
+
+
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080 
+  #   env_file:
+  #     - postgres_config.env
+  #   depends_on:
+  #     - db
+
+volumes:
+  db:
+    driver: local
+  pgadmin:  
