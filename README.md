@@ -40,6 +40,12 @@ docker compose -p expense-tracker -f docker/compose.yml up
 docker exec -it expense-tracker-expense-tracker-1 bash
 ```
 
+#### Install test and dev requirements in container while connected to container
+
+```
+pip install -r requirements.txt
+```
+
 #### How to stop container
 
 * Kill the command/terminal
@@ -59,4 +65,12 @@ docker compose -p expense-tracker -f docker/compose.yml down
 
 ## Tests
 
-TODO
+```
+pytest
+```
+
+#### Generate code coverage
+
+```
+pytest --cov=app tests --cov-branch --cov-report html:coverage
+```

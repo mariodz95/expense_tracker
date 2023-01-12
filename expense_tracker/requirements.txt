@@ -1,0 +1,10 @@
+beanie
+fastapi
+httpx
+pytest
+pytest-asyncio
+pytest-cov
+pytest-mock
+requests
+starlette-context
+uvicorn[standard]

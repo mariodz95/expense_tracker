@@ -1,4 +1,0 @@
-beanie
-fastapi
-uvicorn[standard]
-starlette-context

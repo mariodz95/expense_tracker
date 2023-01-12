@@ -9,3 +9,5 @@ services:
       - "7000:7000"
     volumes:
       - ../:/app:cached
+    env_file:
+      - config.env
