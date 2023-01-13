@@ -1,3 +1,5 @@
+alembic
+asyncpg
 beanie
 fastapi
 httpx
@@ -7,4 +9,5 @@ pytest-cov
 pytest-mock
 requests
 starlette-context
+sqlmodel
 uvicorn[standard]

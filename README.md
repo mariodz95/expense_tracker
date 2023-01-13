@@ -74,3 +74,21 @@ pytest
 ```
 pytest --cov=app tests --cov-branch --cov-report html:coverage
 ```
+
+#### Migrations 
+
+Connect to expense-tracker container and run:
+
+```
+alembic init -t async migrations
+```
+
+```
+alembic revision --autogenerate -m "init"
+```
+
+Apply migration:
+
+```
+alembic upgrade head
+```
