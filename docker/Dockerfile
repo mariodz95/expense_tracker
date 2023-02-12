@@ -2,9 +2,9 @@ FROM python:3.11-slim-bullseye
 
 WORKDIR /app/expense_tracker
 
-COPY ./expense_tracker/requirements.txt ./requirements.txt
+COPY ./expense_tracker/requirements.txt ./requirements/
 
-RUN pip install -r ./requirements.txt
+RUN pip install -r requirements/requirements.txt
 
 COPY ./expense_tracker/app ./app
 
