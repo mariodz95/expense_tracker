@@ -10,6 +10,8 @@ class Config(BaseModel):
     postgres_password: str
     postgres_db: str
     postgres_port: str
+    jwt_secret: str
+    jwt_algorithm: str
 
 
 def get_config() -> Config:

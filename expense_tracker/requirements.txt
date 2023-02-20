@@ -3,6 +3,7 @@ asyncpg
 beanie
 fastapi
 httpx
+pyjwt
 pytest
 pytest-asyncio
 pytest-cov
@@ -11,3 +12,4 @@ requests
 starlette-context
 sqlmodel
 uvicorn[standard]
+pydantic[email]
