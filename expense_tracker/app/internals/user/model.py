@@ -22,3 +22,6 @@ class UserDb(BaseModelDb, table=True):
     first_name: str = Field(nullable=False)
     last_name: str = Field(nullable=False)
     date_of_birth: datetime = Field(nullable=False, default_factory=datetime.utcnow)
+
+    class Config:
+        orm_mode = True

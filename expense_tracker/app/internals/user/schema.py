@@ -34,3 +34,11 @@ class UserLoginSchema(BaseModel):
                 "password": "password"
             }
         }
+
+
+class UserOutput(BaseModel):
+    username: str
+    email: EmailStr
+    first_name: str
+    last_name: str
+    date_of_birth: datetime
