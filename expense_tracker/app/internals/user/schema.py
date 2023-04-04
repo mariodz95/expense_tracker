@@ -1,11 +1,11 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, SecretStr
 from datetime import datetime
 
 
 class UserSchema(BaseModel):
     username: str
     email: EmailStr
-    password: str
+    password: SecretStr
     first_name: str
     last_name: str
     date_of_birth: datetime
