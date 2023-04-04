@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 
 async def create_and_login(user: UserSchema, session: AsyncSession):
-    await user_repository.create_and_login(user, session)
+    await user_repository.create_and_login(user, session, "password_hash")
 
 
 async def hash_password(password: str):

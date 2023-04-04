@@ -1,7 +1,7 @@
 from pydantic import EmailStr
 from datetime import datetime
 from app.internals.model import BaseModelDb
-from sqlmodel import Field
+from sqlmodel import Field, Column, VARCHAR
 from datetime import datetime
 
 import uuid as uuid_pkg
@@ -16,9 +16,9 @@ class UserDb(BaseModelDb, table=True):
         index=True,
         nullable=False,
     )
-    username: str
-    email: EmailStr
-    password_hash: str
-    first_name: str
-    last_name: str
-    date_of_birth: datetime = Field(default_factory=lambda: datetime.utcnow())
+    username: str = Field(sa_column=Column("username", VARCHAR, unique=True))
+    email: EmailStr = Field(sa_column=Column("email", VARCHAR, unique=True))
+    password_hash: str = Field(nullable=False)
+    first_name: str = Field(nullable=False)
+    last_name: str = Field(nullable=False)
+    date_of_birth: datetime = Field(nullable=False, default_factory=datetime.utcnow)
