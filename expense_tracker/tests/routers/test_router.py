@@ -7,5 +7,4 @@ def test_router():
     }
 
     for route in router.router.routes:
-
         assert route.path in expected

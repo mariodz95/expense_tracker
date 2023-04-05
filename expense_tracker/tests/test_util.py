@@ -7,7 +7,6 @@ from tests.utilities import restore_env_vars, update_env_vars
 
 @pytest.fixture
 def some_class_dict():
-
     return {
         "bool_attr": "true",
         "int_attr": "456",

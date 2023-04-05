@@ -5,13 +5,14 @@ from app.config import get_config
 from sqlmodel import SQLModel
 from app.database.setup import engine
 
+
 def app_settings() -> dict:
     config = get_config()
     settings = {"title": config.title}
     if not config.api_docs_enabled:
         settings["docs_url"] = None
         settings["redoc_url"] = None
-    
+
     return settings
 
 

@@ -14,7 +14,7 @@ def _api_docs_disabled_env_setup():
     original_env, new_env = update_env_vars(config)
 
     yield new_env
-    
+
     restore_env_vars(original_env)
 
 
@@ -44,4 +44,3 @@ def test_main_redoc_enabled(client):
 
     assert reponse.status_code == 200
     assert title == "Expense Tracker - ReDoc"
-  

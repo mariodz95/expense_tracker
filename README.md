@@ -95,3 +95,10 @@ Apply migration:
 ```
 alembic upgrade head
 ```
+
+
+### Linting
+
+```
+python -m black
+```

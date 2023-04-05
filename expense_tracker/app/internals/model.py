@@ -3,7 +3,9 @@ from sqlmodel import SQLModel, Field
 
 import uuid as uuid_pkg
 from pydantic import BaseModel
+
 now = datetime.utcnow()
+
 
 class BaseModelDb(SQLModel):
     date_created_at: datetime = Field(default_factory=lambda: datetime.utcnow())

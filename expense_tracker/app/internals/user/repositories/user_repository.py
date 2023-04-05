@@ -6,7 +6,7 @@ from sqlmodel import select
 import logging
 
 
-logger = logging.getLogger(__name__)  
+logger = logging.getLogger(__name__)
 
 
 async def create(user: UserSchema, session: AsyncSession, password_hash: str) -> UserDb:
