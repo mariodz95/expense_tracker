@@ -1,11 +1,13 @@
-from app.internals.user.schema import UserOutput, UserSchema
+from app.internals.user.schema import UserOutputSchema, UserSchema, UserLoginSchema
 from app.internals.user.services import user_service
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
-async def create_user(user: UserSchema, session: AsyncSession) -> UserOutput:
-    return await user_service.create_user(user, session)
+async def create_user(user: UserSchema, session: AsyncSession) -> UserOutputSchema:
+    return await user_service.create(user, session)
 
 
-async def hash_password(password: str):
-    return
+async def login(user_credentials: UserLoginSchema, session: AsyncSession):
+    user = await user_service.get(user_credentials, session)
+
+    return user

@@ -18,7 +18,7 @@ class UserSchema(BaseModel):
                 "password": "password",
                 "first_name": "Name",
                 "last_name": "Last",
-                "date_of_birth": "date_of_birth"
+                "date_of_birth": "2018-12-25 09:27:53"
             }
         }
 
@@ -36,7 +36,7 @@ class UserLoginSchema(BaseModel):
         }
 
 
-class UserOutput(BaseModel):
+class UserOutputSchema(BaseModel):
     username: str
     email: EmailStr
     first_name: str
