@@ -4,6 +4,7 @@ from app.internals.user.model import UserDb
 from fastapi.exceptions import HTTPException
 from sqlmodel import select
 import logging
+from sqlalchemy.exc import IntegrityError
 
 
 logger = logging.getLogger(__name__)
@@ -14,9 +15,15 @@ async def create(user: UserSchema, session: AsyncSession, password_hash: str) ->
     try:
         session.add(db_user)
         await session.commit()
+    except IntegrityError as e:
+        session.rollback()
+        logger.error(e)
+        raise HTTPException(500, detail="Email is already used.")
     except Exception as e:
         logger.error(e)
         raise HTTPException(500, detail="Something is wrong.")
+    finally:
+        session.close()
 
     return db_user
 
@@ -26,6 +33,6 @@ async def get(credentials: UserLoginSchema, session: AsyncSession) -> UserDb:
     result = await session.execute(statement)
     user = result.scalar()
     if not user:
-        raise HTTPException(404, detail="User doesn't exits.")
+        raise HTTPException(404, detail="Invalid email or password")
 
     return user

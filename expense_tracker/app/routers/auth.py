@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Response
 from app.internals.user.schema import UserSchema, UserOutputSchema, UserLoginSchema
 from app.internals.auth.services.auth_service import create_user
 from app.internals.auth.services.auth_service import login as login_service
@@ -6,7 +6,9 @@ from app.internals.auth.services.auth_service import login as login_service
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database.setup import get_session
+from app.config import get_config
 
+config = get_config()
 
 router = APIRouter()
 
@@ -20,6 +22,12 @@ async def signup(
 
 @router.post("/login", response_model=dict)
 async def login(
-    user_credentials: UserLoginSchema, session: AsyncSession = Depends(get_session)
+    user_credentials: UserLoginSchema,
+    response: Response,
+    session: AsyncSession = Depends(get_session),
 ):
-    return await login_service(user_credentials, session)
+    tokens = await login_service(user_credentials, session)
+    response.set_cookie(key=config.jwt_token_access_name, value=tokens["access_token"])
+    response.headers[config.jwt_token_refresh_name] = tokens["refresh_token"]
+
+    return {}
