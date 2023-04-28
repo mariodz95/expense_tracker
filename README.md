@@ -100,5 +100,9 @@ alembic upgrade head
 ### Linting
 
 ```
-python -m black
+python -m black {app_directory}
+```
+
+```
+autoflake --recursive app
 ```
