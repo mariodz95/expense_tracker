@@ -28,8 +28,8 @@ async def create(user: UserSchema, session: AsyncSession, password_hash: str) ->
     return db_user
 
 
-async def get(credentials: UserLoginSchema, session: AsyncSession) -> UserDb:
-    statement = select(UserDb).where(UserDb.email == credentials.email)
+async def get(email: str, session: AsyncSession) -> UserDb:
+    statement = select(UserDb).where(UserDb.email == email)
     result = await session.execute(statement)
     user = result.scalar()
     if not user:

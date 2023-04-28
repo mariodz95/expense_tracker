@@ -38,17 +38,3 @@ class UserDb(BaseModelDb, table=True):
     budgets: list["BudgetDb"] = Relationship(
         back_populates="users", link_model=UserBudgetLink
     )
-
-
-class BudgetDb(BaseModelDb, table=True):
-    __tablename__ = "budget"
-
-    id: uuid_pkg.UUID = Field(
-        default_factory=uuid_pkg.uuid4,
-        primary_key=True,
-        index=True,
-        nullable=False,
-    )
-    users: list["UserDb"] = Relationship(
-        back_populates="budgets", link_model=UserBudgetLink
-    )

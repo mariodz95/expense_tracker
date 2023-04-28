@@ -1,12 +1,8 @@
-from pydantic import EmailStr
-from datetime import datetime
 from app.internals.model import BaseModelDb
-from sqlmodel import Field, Column, VARCHAR, SQLModel, Field, Relationship
-from datetime import datetime
-from typing import Optional
+from sqlmodel import Field, Relationship
 from app.internals.user.model import UserDb
 import uuid as uuid_pkg
-from typing import TYPE_CHECKING, List, Optional
+from typing import TYPE_CHECKING
 from app.internals.user.model import UserBudgetLink
 
 
@@ -23,6 +19,8 @@ class BudgetDb(BaseModelDb, table=True):
         index=True,
         nullable=False,
     )
+    name: str
+    description: str
     users: list["UserDb"] = Relationship(
         back_populates="budgets", link_model=UserBudgetLink
     )

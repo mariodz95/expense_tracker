@@ -13,6 +13,6 @@ async def create(user: UserSchema, session: AsyncSession) -> UserOutputSchema:
 
 
 async def get(credentials: UserLoginSchema, session: AsyncSession) -> UserDb:
-    user = await user_repository.get(credentials, session)
+    user = await user_repository.get(credentials.email, session)
 
     return user
