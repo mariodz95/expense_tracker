@@ -10,6 +10,7 @@ class Config(BaseModel):
     postgres_password: str
     postgres_db: str
     postgres_port: str
+    redis_uri: str
     jwt_algorithm: str
     jwt_token_access_name: str
     jwt_token_refresh_name: str

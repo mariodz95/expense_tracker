@@ -7,10 +7,14 @@
 
 ## Overview
 
+Web app for tracking your budget.
+
 ### This project uses
 * Python: [Python documentation](https://docs.python.org/3/)
 * FastAPI [FastAPI documentation](https://fastapi.tiangolo.com/)
 * Pydantic [Pydantic documentation](https://docs.pydantic.dev/)
+* SQLModel [SQLModel documentation](https://sqlmodel.tiangolo.com/)
+* Postgresql [Postgresql documentation](https://www.postgresql.org/)
 
 ## Project setup
 

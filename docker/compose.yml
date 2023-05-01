@@ -46,6 +46,22 @@ services:
     depends_on:
       - db
 
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379 
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    restart: always
+    ports:
+      - 7010:8081
+    env_file:
+      - redis_config.env
+    depends_on:
+      - redis
+
 volumes:
   db:
   pgadmin:  

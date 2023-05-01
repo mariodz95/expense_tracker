@@ -150,3 +150,4 @@ coverage.xml
 
 config.env
 postgres_config.env
+redis_config.env
