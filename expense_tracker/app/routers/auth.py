@@ -26,8 +26,8 @@ async def login(
     response: Response,
     session: AsyncSession = Depends(get_session),
 ):
-    tokens = await login_service(user_credentials, session)
-    response.set_cookie(key=config.jwt_token_access_name, value=tokens["access_token"])
-    response.headers[config.jwt_token_refresh_name] = tokens["refresh_token"]
+    auth_response = await login_service(user_credentials, session)
+    response.set_cookie(key=config.jwt_token_access_name, value = auth_response["access_token"],)
+    response.headers[config.jwt_token_refresh_name] = auth_response["refresh_token"]
 
-    return {}
+    return { "user": auth_response["user"]}

@@ -18,7 +18,7 @@ async def login(user_credentials: UserLoginSchema, session: AsyncSession):
     access_token = generate_token(user, "ACCESS_TOKEN")
     refresh_token = generate_token(user, "REFRESH_TOKEN")
 
-    return {"access_token": access_token, "refresh_token": refresh_token}
+    return {"access_token": access_token, "refresh_token": refresh_token, "user": user}
 
 
 async def authenticate():

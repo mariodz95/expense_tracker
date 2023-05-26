@@ -16,14 +16,14 @@ services:
     depends_on:
       - db
 
-  expense-tracker-fe:
-    build:
-      context: ..
-      dockerfile: ./docker/Dockerfile.fe
-    ports:
-      - "3000:3000"
-    volumes:
-      - ../frontend/expense-tracker-fe:/app
+  # expense-tracker-fe:
+  #   build:
+  #     context: ..
+  #     dockerfile: ./docker/Dockerfile.fe
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ../frontend/expense-tracker-fe:/app
 
   db:
     image: postgres:latest
