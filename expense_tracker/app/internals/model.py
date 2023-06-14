@@ -1,8 +1,6 @@
 from datetime import datetime
 from sqlmodel import SQLModel, Field
 
-import uuid as uuid_pkg
-from pydantic import BaseModel
 
 now = datetime.utcnow()
 

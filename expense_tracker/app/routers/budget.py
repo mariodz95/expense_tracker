@@ -1,7 +1,4 @@
-from fastapi import APIRouter, Response, Cookie
-from app.internals.user.schema import UserSchema, UserOutputSchema, UserLoginSchema
-from app.internals.auth.services.auth_service import create_user
-from app.internals.auth.services.auth_service import login as login_service
+from fastapi import APIRouter, Cookie
 
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession

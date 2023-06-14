@@ -1,8 +1,6 @@
 import re
-from unittest.mock import AsyncMock, patch
 
 import pytest
-from fastapi.testclient import TestClient
 
 from app import main
 from tests.utilities import create_config_dict, restore_env_vars, update_env_vars

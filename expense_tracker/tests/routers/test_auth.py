@@ -1,5 +1,4 @@
 from unittest.mock import AsyncMock
-from app.internals.user.schema import UserOutputSchema
 from tests.internals.user.user_factory import UserSchemaFactory
 import orjson
 

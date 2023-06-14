@@ -1,4 +1,4 @@
-from app.internals.user.schema import UserSchema, UserLoginSchema
+from app.internals.user.schema import UserSchema
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.internals.user.model import UserDb
 from fastapi.exceptions import HTTPException
