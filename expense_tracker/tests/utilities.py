@@ -19,7 +19,20 @@ def convert_to_env_vars(data: dict) -> dict:
 
 
 def create_config_dict(override: dict = {}) -> dict:
-    data = {"title": "Expense tracker", "api_docs_enabled": "True"}
+    data = {
+        "title": "Expense tracker",
+        "api_docs_enabled": True,
+        "postgres_user": "postgre",
+        "postgres_password": "postgres",
+        "postgres_db": "expense_tracker",
+        "postgres_port": "5432",
+        "redis_uri": "redis://testconnection:6379",
+        "jwt_algorithm": "HS256",
+        "jwt_token_access_name": "expense_jwt_token",
+        "jwt_token_refresh_name": "X-refresh-token",
+        "jwt_expiration": 10080,
+        "jwt_secret": "secret_key",
+    }
     for key in override:
         data[key] = override[key]
 

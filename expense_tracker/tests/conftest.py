@@ -12,11 +12,17 @@ from sqlmodel.pool import StaticPool
 from app.database.setup import get_session
 
 from app.main import app
+from tests.utilities import create_config_dict
 
 
 @pytest.fixture
 def client():
     return TestClient(app)
+
+
+@pytest.fixture
+def config_dict():
+    return create_config_dict()
 
 
 @pytest.fixture(name="session")

@@ -21,7 +21,7 @@ def app_settings() -> dict:
 app = FastAPI(**app_settings())
 app.include_router(router)
 
-origins = ['http://localhost:3000'] 
+origins = ["http://localhost:3000"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -30,6 +30,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.on_event("startup")
 async def app_init():

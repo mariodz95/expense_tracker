@@ -1,8 +1,11 @@
+autoflake
 alembic
 asyncpg
 beanie
+factory-boy
 fastapi
 httpx
+orjson
 passlib
 pydantic[email]
 pyjwt

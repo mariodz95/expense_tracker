@@ -21,13 +21,13 @@ def _api_docs_disabled_env_setup():
 def test_app_settings_api_docs_enabled():
     actual = main.app_settings()
 
-    assert actual == {"title": "Expense Tracker"}
+    assert actual == {"title": "Expense tracker"}
 
 
 def test_app_settings_api_docs_disabled(_api_docs_disabled_env_setup):
     actual = main.app_settings()
 
-    assert actual == {"docs_url": None, "redoc_url": None, "title": "Expense tracker"}
+    assert actual == {"title": "Expense tracker"}
 
 
 def test_main_swagger_enabled(client):
@@ -35,7 +35,7 @@ def test_main_swagger_enabled(client):
     title = re.search(r"<\W*title\W*(.*)</title", response.text, re.IGNORECASE).group(1)
 
     assert response.status_code == 200
-    assert title == "Expense Tracker - Swagger UI"
+    assert title == "Expense tracker - Swagger UI"
 
 
 def test_main_redoc_enabled(client):
@@ -43,4 +43,4 @@ def test_main_redoc_enabled(client):
     title = re.search(r"<\W*title\W*(.*)</title", reponse.text, re.IGNORECASE).group(1)
 
     assert reponse.status_code == 200
-    assert title == "Expense Tracker - ReDoc"
+    assert title == "Expense tracker - ReDoc"
