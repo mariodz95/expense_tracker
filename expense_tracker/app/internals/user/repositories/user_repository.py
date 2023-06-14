@@ -23,7 +23,7 @@ async def create(user: UserSchema, session: AsyncSession, password_hash: str) ->
         logger.error(e)
         raise HTTPException(500, detail="Something is wrong.")
     finally:
-        session.close()
+        await session.close()
 
     return db_user
 

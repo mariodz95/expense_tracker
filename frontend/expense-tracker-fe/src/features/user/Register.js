@@ -4,36 +4,31 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Error from '../../components/Error'
 import Spinner from '../../components/Spinner'
-// import { registerUser } from './userActions'
+import { useSignupUserMutation } from '../../services/authApi'
+import { setCredentials } from './authSlice'
+
 
 const Register = () => {
   const [customError, setCustomError] = useState(null)
 
-  const { loading, userInfo, error, success } = useSelector(
+  const { loading, user, success } = useSelector(
     (state) => state.auth
   )
   const dispatch = useDispatch()
-
+  const [signup, { isLoading, error }] = useSignupUserMutation();
   const { register, handleSubmit } = useForm()
   const navigate = useNavigate()
 
   useEffect(() => {
-    // redirect authenticated user to profile screen
-    if (userInfo) navigate('/user-profile')
-    // redirect user to login page if registration was successful
+    if (user) navigate('/user-profile')
     if (success) navigate('/login')
-  }, [navigate, userInfo, success])
+  }, [navigate, user, success])
 
-  const submitForm = (data) => {
-    // check if passwords match
-    if (data.password !== data.confirmPassword) {
-      setCustomError('Password mismatch')
-      return
-    }
-    // transform email string to lowercase to avoid case sensitivity issues in login
+  const submitForm = async (data) => {
     data.email = data.email.toLowerCase()
-
-    // dispatch(registerUser(data))
+    const user = await signup(data).unwrap();
+    dispatch(setCredentials(user))
+    navigate('/user-profile')
   }
 
   return (
@@ -86,11 +81,11 @@ const Register = () => {
         />
       </div>
       <div className='form-group'>
-        <label htmlFor='email'>Confirm Password</label>
+        <label htmlFor='date_of_birth'>Date of birht</label>
         <input
-          type='password'
+          type='text'
           className='form-input'
-          {...register('confirmPassword')}
+          {...register('date_of_birth')}
           required
         />
       </div>

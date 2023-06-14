@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import '../styles/header.css'
 
 const Header = () => {
-  const { userInfo } = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
   // // automatically authenticate user if token is found
@@ -19,14 +19,14 @@ const Header = () => {
         <span>
           {/* {isFetching
             ? `Fetching your profile...`
-            : userInfo !== null
-            ? `Logged in as ${userInfo.email}`
+            : user !== null
+            ? `Logged in as ${user.email}`
             : "You're not logged in"} */}
-          {/* {userInfo && `Logged in as ${userInfo.email}`}
-          {userInfo === null && "You're not logged in"} */}
+          {user && `Logged in as ${user.email}`}
+          {user === null && "You're not logged in"}
         </span>
         <div className='cta'>
-          {userInfo ? (
+          {user ? (
             <button className='button'>
               Logout
             </button>
