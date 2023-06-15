@@ -109,4 +109,6 @@ python -m black {app_directory}
 
 ```
 autoflake --recursive app
+autoflake --remove-all-unused-imports --recursive --remove-unused-variables --in-place app --exclude=__init__.py
+autoflake --remove-all-unused-imports --recursive --remove-unused-variables --in-place tests --exclude=__init__.py
 ```
