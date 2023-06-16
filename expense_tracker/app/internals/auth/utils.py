@@ -26,6 +26,7 @@ def generate_token(user: UserSchema, claim: str):
         "claim": claim,
         "exp": expire_at,
     }
+
     return jwt_encode(payload, config.jwt_secret, algorithm=config.jwt_algorithm)
 
 
