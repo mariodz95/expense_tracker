@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-
-from app.routers.router import router
-from app.config import get_config
-from sqlmodel import SQLModel
-from app.database.setup import engine
 from fastapi.middleware.cors import CORSMiddleware
+from sqlmodel import SQLModel
+
+from app.config import get_config
+from app.database.setup import engine
+from app.routers.router import router
 
 config = get_config()
 

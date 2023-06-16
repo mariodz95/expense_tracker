@@ -1,5 +1,6 @@
 import factory
 from factory import Faker
+
 from app.internals.budget.model import BudgetDb
 
 

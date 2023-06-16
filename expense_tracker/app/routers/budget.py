@@ -1,12 +1,11 @@
-from fastapi import APIRouter, Cookie
-
-from fastapi import Depends
+from fastapi import APIRouter, Cookie, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.database.setup import get_session
+
 from app.config import get_config
+from app.database.setup import get_session
+from app.internals.budget.model import BudgetDb
 from app.internals.budget.schema import BudgetSchema
 from app.internals.budget.services import budget_service
-from app.internals.budget.model import BudgetDb
 
 config = get_config()
 

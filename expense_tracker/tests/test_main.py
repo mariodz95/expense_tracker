@@ -3,7 +3,8 @@ import re
 import pytest
 
 from app import main
-from tests.utilities import create_config_dict, restore_env_vars, update_env_vars
+from tests.utilities import (create_config_dict, restore_env_vars,
+                             update_env_vars)
 
 
 @pytest.fixture

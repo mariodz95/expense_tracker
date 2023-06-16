@@ -1,6 +1,8 @@
 from unittest.mock import AsyncMock
-from tests.internals.user.user_factory import UserSchemaFactory
+
 import orjson
+
+from tests.internals.user.user_factory import UserSchemaFactory
 
 
 def test_signup(client, mocker):

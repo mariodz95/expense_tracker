@@ -1,10 +1,10 @@
-from app.internals.model import BaseModelDb
-from sqlmodel import Field, Relationship
-from app.internals.user.model import UserDb
 import uuid as uuid_pkg
 from typing import TYPE_CHECKING
-from app.internals.user.model import UserBudgetLink
 
+from sqlmodel import Field, Relationship
+
+from app.internals.model import BaseModelDb
+from app.internals.user.model import UserBudgetLink, UserDb
 
 if TYPE_CHECKING:
     from app.internals.user.model import UserDb

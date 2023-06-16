@@ -1,11 +1,11 @@
-from fastapi import APIRouter, Response
-from app.internals.user.schema import UserSchema, UserOutputSchema, UserLoginSchema
-from app.internals.auth.services import auth_service
-
-from fastapi import Depends
+from fastapi import APIRouter, Depends, Response
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.database.setup import get_session
+
 from app.config import get_config
+from app.database.setup import get_session
+from app.internals.auth.services import auth_service
+from app.internals.user.schema import (UserLoginSchema, UserOutputSchema,
+                                       UserSchema)
 
 config = get_config()
 

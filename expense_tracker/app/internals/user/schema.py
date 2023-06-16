@@ -1,5 +1,6 @@
-from pydantic import BaseModel, EmailStr, SecretStr
 from datetime import datetime
+
+from pydantic import BaseModel, EmailStr, SecretStr
 
 
 class UserSchema(BaseModel):

@@ -1,5 +1,6 @@
 from redis import asyncio as aioredis
 from redis.asyncio.client import Redis
+
 from app.config import get_config
 
 config = get_config()

@@ -1,8 +1,10 @@
-from app.internals.user.schema import UserOutputSchema, UserSchema, UserLoginSchema
-from app.internals.user.services import user_service
-from sqlalchemy.ext.asyncio import AsyncSession
-from app.internals.auth.utils import verify_password, generate_token
 from fastapi.exceptions import HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.internals.auth.utils import generate_token, verify_password
+from app.internals.user.schema import (UserLoginSchema, UserOutputSchema,
+                                       UserSchema)
+from app.internals.user.services import user_service
 
 
 async def create_user(user: UserSchema, session: AsyncSession) -> UserOutputSchema:

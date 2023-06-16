@@ -1,11 +1,11 @@
-from pydantic import EmailStr
-from datetime import datetime
-from app.internals.model import BaseModelDb
-from sqlmodel import Field, Column, VARCHAR, Relationship, SQLModel
-from datetime import datetime
 import uuid as uuid_pkg
-from typing import Optional, TYPE_CHECKING
+from datetime import datetime
+from typing import TYPE_CHECKING, Optional
 
+from pydantic import EmailStr
+from sqlmodel import VARCHAR, Column, Field, Relationship, SQLModel
+
+from app.internals.model import BaseModelDb
 
 if TYPE_CHECKING:
     from app.internals.budget.model import BudgetDb
