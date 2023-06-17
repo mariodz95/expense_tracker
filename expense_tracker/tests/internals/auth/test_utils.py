@@ -55,7 +55,6 @@ def test_generate_token(mocker):
     assert result == token
 
 
-
 def test_decode_token(mocker):
     token = "token"
     mocker.patch(
@@ -73,4 +72,3 @@ def test_decode_token_catch_exception(mocker):
 
     with pytest.raises(HTTPException):
         utils.decode_token(token)
-

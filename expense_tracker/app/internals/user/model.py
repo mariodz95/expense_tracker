@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 class UserBudgetLink(SQLModel, table=True):
     user_id: Optional[uuid_pkg.UUID] = Field(
-        default=None, foreign_key="user.id", primary_key=True
+        default=None, foreign_key="users.id", primary_key=True
     )
     budget_id: Optional[uuid_pkg.UUID] = Field(
         default=None, foreign_key="budget.id", primary_key=True
@@ -21,7 +21,7 @@ class UserBudgetLink(SQLModel, table=True):
 
 
 class UserDb(BaseModelDb, table=True):
-    __tablename__ = "user"
+    __tablename__ = "users"
 
     id: uuid_pkg.UUID = Field(
         default_factory=uuid_pkg.uuid4,

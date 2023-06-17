@@ -3,6 +3,7 @@ from factory import Faker
 
 from app.internals.user.model import UserDb
 from app.internals.user.schema import UserSchema
+from tests.internals.initial_model_factory import InitialBaseFactory
 
 
 class UserSchemaFactory(factory.Factory):
@@ -17,7 +18,7 @@ class UserSchemaFactory(factory.Factory):
     date_of_birth = Faker("date_time")
 
 
-class UserDbFactory(factory.Factory):
+class UserDbFactory(InitialBaseFactory):
     class Meta:
         model = UserDb
 

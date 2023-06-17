@@ -104,7 +104,8 @@ alembic upgrade head
 ### Linting
 
 ```
-python -m black {app_directory}
+python -m black app
+python -m black tests
 ```
 
 ```

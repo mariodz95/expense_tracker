@@ -16,17 +16,16 @@ async def create(user: UserSchema, session: AsyncSession, password_hash: str) ->
     try:
         session.add(db_user)
         await session.commit()
+        await session.refresh(db_user)
+
+        return db_user
     except IntegrityError as e:
-        session.rollback()
+        await session.rollback()
         logger.error(e)
         raise HTTPException(500, detail="Email is already used.")
     except Exception as e:
         logger.error(e)
         raise HTTPException(500, detail="Something is wrong.")
-    finally:
-        await session.close()
-
-    return db_user
 
 
 async def get(email: str, session: AsyncSession) -> UserDb:

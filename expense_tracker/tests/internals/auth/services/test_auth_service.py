@@ -8,24 +8,22 @@ from app.internals.user.schema import UserLoginSchema
 from tests.internals.user.user_factory import UserDbFactory, UserSchemaFactory
 
 
-@pytest.mark.asyncio
-async def test_create_user(mocker, session):
+async def test_create_user(mocker, session_fixture):
     user = UserSchemaFactory()
     create_mock = mocker.patch(
         "app.internals.auth.services.auth_service.user_service.create",
         AsyncMock(return_value=user),
     )
 
-    response = await auth_service.create_user(user, session)
+    response = await auth_service.create_user(user, session_fixture)
 
     assert response == user
-    create_mock.assert_called_once_with(user, session)
+    create_mock.assert_called_once_with(user, session_fixture)
 
 
-@pytest.mark.asyncio
-async def test_login(mocker, session):
+async def test_login(mocker, session_fixture):
     credentials = UserLoginSchema(email="test@email.com", password="password")
-    db_user = UserDbFactory()
+    db_user = UserDbFactory.build()
     expected = {"access_token": "token", "refresh_token": "token", "user": db_user}
     user_service_get_mock = mocker.patch(
         "app.internals.auth.services.auth_service.user_service.get",
@@ -39,9 +37,9 @@ async def test_login(mocker, session):
         "app.internals.auth.services.auth_service.verify_password",
         Mock(return_value=True),
     )
-    response = await auth_service.login(credentials, session)
+    response = await auth_service.login(credentials, session_fixture)
 
-    user_service_get_mock.assert_called_once_with(credentials, session)
+    user_service_get_mock.assert_called_once_with(credentials, session_fixture)
     verify_password_mock.assert_called_once_with(
         credentials.password, db_user.password_hash
     )
@@ -52,10 +50,9 @@ async def test_login(mocker, session):
     assert response == expected
 
 
-@pytest.mark.asyncio
-async def test_login_catch_exception(mocker, session):
+async def test_login_catch_exception(mocker, session_fixture):
     credentials = UserLoginSchema(email="test@email.com", password="password")
-    db_user = UserDbFactory()
+    db_user = UserDbFactory.build()
     mocker.patch(
         "app.internals.auth.services.auth_service.user_service.get",
         AsyncMock(return_value=db_user),
@@ -66,17 +63,15 @@ async def test_login_catch_exception(mocker, session):
     )
 
     with pytest.raises(HTTPException):
-        await auth_service.login(credentials, session)
+        await auth_service.login(credentials, session_fixture)
 
 
-@pytest.mark.asyncio
 async def test_authenticate():
     response = await auth_service.authenticate()
 
     assert response == None
 
 
-@pytest.mark.asyncio
 async def test_logout():
     response = await auth_service.logout()
 
