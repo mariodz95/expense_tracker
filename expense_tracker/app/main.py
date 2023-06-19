@@ -1,15 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from sqlmodel import SQLModel
 
 from app.config import get_config
-from app.database.setup import engine
 from app.routers.router import router
-
-config = get_config()
 
 
 def app_settings() -> dict:
+    config = get_config()
     settings = {"title": config.title}
     if not config.api_docs_enabled:
         settings["docs_url"] = None
@@ -20,6 +17,7 @@ def app_settings() -> dict:
 
 app = FastAPI(**app_settings())
 app.include_router(router)
+config = get_config()
 
 origins = ["http://localhost:3000"]
 app.add_middleware(
@@ -34,6 +32,6 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def app_init():
-    async with engine.begin() as conn:
-        await conn.run_sync(SQLModel.metadata.create_all)
+    # async with engine.begin() as conn:
+    #     await conn.run_sync(SQLModel.metadata.create_all)
     print("App startup complete")

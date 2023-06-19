@@ -8,7 +8,7 @@ from tests.internals.user.user_factory import UserDbFactory
 
 async def test_create(mocker, session_fixture):
     budget = BudgetSchema(name="test budget", description="test budget")
-    budget_db = BudgetDbFactory()
+    budget_db = BudgetDbFactory.build()
     user = UserDbFactory.build()
     expected = budget_db
     token = {"sub": "user@email.com"}

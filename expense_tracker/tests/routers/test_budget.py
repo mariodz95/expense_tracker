@@ -5,9 +5,9 @@ import orjson
 from tests.internals.budget.budget_factory import BudgetDbFactory
 
 
-def test_create(client, mocker):
+async def test_create(client, mocker):
     json_data = {"name": "home budget", "description": "home budget"}
-    budget = BudgetDbFactory()
+    budget = BudgetDbFactory.build()
     budget_json = orjson.dumps(budget.dict()).decode()
     budget_json_dict = orjson.loads(budget_json)
     expected = budget_json_dict

@@ -1,6 +1,7 @@
 import re
 
 import pytest
+from fastapi.testclient import TestClient
 
 from app import main
 from tests.utilities import (create_config_dict, restore_env_vars,
@@ -10,6 +11,7 @@ from tests.utilities import (create_config_dict, restore_env_vars,
 @pytest.fixture
 def _api_docs_disabled_env_setup():
     config = create_config_dict({"api_docs_enabled": False})
+
     original_env, new_env = update_env_vars(config)
 
     yield new_env
@@ -26,7 +28,7 @@ def test_app_settings_api_docs_enabled():
 def test_app_settings_api_docs_disabled(_api_docs_disabled_env_setup):
     actual = main.app_settings()
 
-    assert actual == {"title": "Expense tracker"}
+    assert actual == {"title": "Expense tracker", "docs_url": None, "redoc_url": None}
 
 
 def test_main_swagger_enabled(client):
@@ -43,3 +45,10 @@ def test_main_redoc_enabled(client):
 
     assert reponse.status_code == 200
     assert title == "Expense tracker - ReDoc"
+
+
+def test_main_startup_event():
+    with TestClient(main.app) as client:
+        response = client.get("/")
+
+        assert response.status_code == 404

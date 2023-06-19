@@ -9,6 +9,6 @@ async def create(budget: BudgetSchema, user: UserDb, session: AsyncSession) -> B
     budget_db = BudgetDb(**budget.dict(), users=[user])
     session.add(budget_db)
     await session.commit()
-    session.refresh(budget_db)
+    await session.refresh(budget_db)
 
     return budget_db
