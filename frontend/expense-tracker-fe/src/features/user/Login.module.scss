@@ -1,0 +1,24 @@
+.form-container
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.form-input {
+  border-radius: 5px;
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  background-color: #16b8f3;
+  color: white;
+  border-radius: 5px;
+}
+
+.form-container {
+    text-align: center;
+}
