@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import '../styles/header.css'
+import styles from "./Header.module.scss";
+import Button from "@mui/material/Button";
 
 const Header = () => {
   const { user } = useSelector((state) => state.auth)
@@ -15,21 +16,16 @@ const Header = () => {
 
   return (
     <header>
-      <div className='header-status'>
+      <div className={styles['header-status']}>
         <span>
-          {/* {isFetching
-            ? `Fetching your profile...`
-            : user !== null
-            ? `Logged in as ${user.email}`
-            : "You're not logged in"} */}
           {user && `Logged in as ${user.email}`}
           {user === null && "You're not logged in"}
         </span>
-        <div className='cta'>
+        <div className={styles['cta']}>
           {user ? (
-            <button className='button'>
+            <Button className='button'>
               Logout
-            </button>
+            </Button>
           ) : (
             <NavLink className='button' to='/login'>
               Login
@@ -37,7 +33,7 @@ const Header = () => {
           )}
         </div>
       </div>
-      <nav className='container navigation'>
+      <nav className={styles['navigation']}>
         <NavLink to='/'>Home</NavLink>
         <NavLink to='/login'>Login</NavLink>
         <NavLink to='/register'>Register</NavLink>
