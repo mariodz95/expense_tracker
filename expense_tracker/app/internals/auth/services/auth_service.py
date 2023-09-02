@@ -11,7 +11,7 @@ async def create_user(user: UserSchema, session: AsyncSession) -> UserOutputSche
     return await user_service.create(user, session)
 
 
-async def login(user_credentials: UserLoginSchema, session: AsyncSession):
+async def login(user_credentials: UserLoginSchema, session: AsyncSession) -> UserOutputSchema:
     user = await user_service.get(user_credentials, session)
 
     if not verify_password(user_credentials.password, user.password_hash):
@@ -20,7 +20,7 @@ async def login(user_credentials: UserLoginSchema, session: AsyncSession):
     access_token = generate_token(user, "ACCESS_TOKEN")
     refresh_token = generate_token(user, "REFRESH_TOKEN")
 
-    return {"access_token": access_token, "refresh_token": refresh_token, "user": user}
+    return {"access_token": access_token, "refresh_token": refresh_token, "user": UserOutputSchema(**user.dict())}
 
 
 async def authenticate():

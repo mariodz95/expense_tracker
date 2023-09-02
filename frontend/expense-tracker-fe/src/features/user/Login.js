@@ -26,8 +26,9 @@ const Login = () => {
 
   const submitForm = async (data) => {
     try {
-      const user = await login(data).unwrap();
-      dispatch(setCredentials(user));
+      const response = await login(data).unwrap();
+      localStorage.setItem("token", response.refreshToken)
+      dispatch(setCredentials(response));
       navigate("/user-profile");
     } catch (err) {
       setErrorMessage(err.data.detail)

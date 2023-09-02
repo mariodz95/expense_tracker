@@ -4,7 +4,7 @@ const initialState = {
   token: null,
   user: null,
   isAuthenticated: false,
-  error: null,
+  refreshToken: null,
 };
 
 export const authSlice = createSlice({
@@ -15,20 +15,14 @@ export const authSlice = createSlice({
       const { payload } = action;
       return {
         ...state,
-        token: payload.token,
+        token: payload.refreshToken,
         user: payload.user,
         isAuthenticated: true,
       };
     },
-    logout: (state) => {
-      return initialState;
-    },
   },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials } = authSlice.actions;
 
 export default authSlice.reducer;
-
-export const selectCurrentUser = (state) => state.auth.user;
-export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;

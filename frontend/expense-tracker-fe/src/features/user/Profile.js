@@ -6,7 +6,6 @@ const Profile = () => {
 
   return (
     <div>
-      {console.log("DADA user", user)}
       <figure>{user?.firstName}</figure>
       <span>
         Welcome <strong>{user?.firstName}!</strong> You can view this page

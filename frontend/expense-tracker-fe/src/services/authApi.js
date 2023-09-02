@@ -20,6 +20,12 @@ export const authApi = createApi({
         method: 'POST',
         body,
       }),
+      transformResponse(responseBody, meta) {
+        return {
+          refreshToken: meta.response.headers.get("X-refresh-token"),
+          user: responseBody.user
+        }
+      }
     }),
     signupUser: build.mutation({
       query: (body) => ({

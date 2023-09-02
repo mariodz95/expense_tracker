@@ -11,12 +11,22 @@ const LOGIN_TEXT = Object.freeze({
 });
 
 const SIGNUP_TEXT = Object.freeze({
-    EMAIL_LABEL_TEXT: "Email",
-    PASSWORD_LABEL_TEXT: "Password",
-    SIGNUP_BUTTON_TEXT: "Sign up",
-    USERNAME_LABEL_TEXT: "Username",
-    FIRSTNAME_LABEL_TEXT: "First name",
-    LASTNAME_LABEL_TEXT: "Last name"
-  });
+  EMAIL_LABEL_TEXT: "Email",
+  PASSWORD_LABEL_TEXT: "Password",
+  SIGNUP_BUTTON_TEXT: "Sign up",
+  USERNAME_LABEL_TEXT: "Username",
+  FIRSTNAME_LABEL_TEXT: "First name",
+  LASTNAME_LABEL_TEXT: "Last name",
+  DATE_OF_BIRTH_LABEL: "Date of birth",
+});
 
-export { HOME_TEXT, LOGIN_TEXT, SIGNUP_TEXT };
+const HEADER_TEXT = Object.freeze({
+  USER_LOGGED_IN_TEXT: "Logged in as",
+  LOGOUT_BUTTON_TEXT: "Logout",
+  LOGIN_BUTTON_TEXT: "Login",
+  SIGNUP_BUTTON_TEXT: "Sign up",
+  HOME_NAV_TEXT: "Home",
+  PROFILE_NAV_TEXT: "Profile"
+});
+
+export { HOME_TEXT, LOGIN_TEXT, SIGNUP_TEXT, HEADER_TEXT };

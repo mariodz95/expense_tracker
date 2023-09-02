@@ -119,7 +119,7 @@ const Register = () => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={["DatePicker"]}>
               <DatePicker
-                label="Date of birth"
+                label={TEXT.DATE_OF_BIRTH_LABEL}
                 onChange={(e) => {
                   setDateOfBirthValue(e.$d);
                 }}
