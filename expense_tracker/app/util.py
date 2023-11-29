@@ -7,7 +7,8 @@ from app.model import PydanticModel
 
 
 def populate_env_vars(doc_model: Type[PydanticModel]) -> dict:
-    """Returns dictionary populated with present keys and type casted values from
+    """
+    Returns dictionary populated with present keys and type casted values from
     environment variables matched in provided Pydantic model.
     """
     env_vars = {}

@@ -118,3 +118,9 @@ autoflake --remove-all-unused-imports --recursive --remove-unused-variables --in
 isort --combine-as app
 isort --combine-as tests
 ```
+
+### Run app locally
+
+```
+uvicorn --reload --reload-dir ./app app.main:app
+```
