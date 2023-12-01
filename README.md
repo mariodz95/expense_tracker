@@ -124,3 +124,11 @@ isort --combine-as tests
 ```
 uvicorn --reload --reload-dir ./app app.main:app
 ```
+
+### Frontend
+ 
+from expense-tracker-fe run:
+
+```
+npm start
+```

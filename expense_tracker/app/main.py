@@ -19,7 +19,7 @@ app = FastAPI(**app_settings())
 app.include_router(router)
 config = get_config()
 
-origins = ["http://localhost:3000"]
+origins = [config.allowed_origins]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,

@@ -16,5 +16,5 @@ pytest-mock
 redis
 requests
 starlette-context
-sqlmodel
+sqlmodel==0.0.8
 uvicorn[standard]
