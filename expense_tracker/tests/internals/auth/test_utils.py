@@ -42,19 +42,6 @@ def test_generate_token(mocker):
     assert result == token
 
 
-def test_generate_token(mocker):
-    user = UserSchemaFactory()
-    token = "token"
-    mocker.patch(
-        "app.internals.auth.utils.jwt_encode",
-        Mock(return_value=token),
-    )
-
-    result = utils.generate_token(user, "ACCESS_TOKEN")
-
-    assert result == token
-
-
 def test_decode_token(mocker):
     token = "token"
     mocker.patch(

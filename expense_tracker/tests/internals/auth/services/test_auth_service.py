@@ -4,7 +4,7 @@ import pytest
 from fastapi.exceptions import HTTPException
 
 from app.internals.auth.services import auth_service
-from app.internals.user.schema import UserLoginSchema
+from app.internals.user.schema import UserLoginSchema, UserOutputSchema
 from tests.internals.user.user_factory import UserDbFactory, UserSchemaFactory
 
 
@@ -24,7 +24,8 @@ async def test_create_user(mocker, session_fixture):
 async def test_login(mocker, session_fixture):
     credentials = UserLoginSchema(email="test@email.com", password="password")
     db_user = UserDbFactory.build()
-    expected = {"access_token": "token", "refresh_token": "token", "user": db_user}
+    user_schema = UserOutputSchema(**db_user.dict())
+    expected = {"access_token": "token", "refresh_token": "token", "user": user_schema}
     user_service_get_mock = mocker.patch(
         "app.internals.auth.services.auth_service.user_service.get",
         AsyncMock(return_value=db_user),
