@@ -7,7 +7,6 @@ from sqlmodel import select
 
 from app.internals.user.model import UserDb
 from app.internals.user.schema import UserSchema
-from sqlalchemy.sql import text
 
 logger = logging.getLogger(__name__)
 

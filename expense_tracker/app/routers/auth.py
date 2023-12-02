@@ -8,7 +8,6 @@ from app.internals.user.schema import (UserLoginSchema, UserOutputSchema,
                                        UserSchema)
 
 config = get_config()
-
 router = APIRouter()
 
 
