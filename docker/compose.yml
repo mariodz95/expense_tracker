@@ -1,5 +1,4 @@
 services:
-
   expense-tracker:
     build:
       context: ..
@@ -16,14 +15,14 @@ services:
     depends_on:
       - db
 
-  # expense-tracker-fe:
-  #   build:
-  #     context: ..
-  #     dockerfile: ./docker/Dockerfile.fe
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ../frontend/expense-tracker-fe:/app
+  expense-tracker-fe:
+    build:
+      context: ..  # This should be properly indented under build
+      dockerfile: ./docker/Dockerfile.fe
+    ports:
+     - "3000:3000"
+    volumes:
+      - ../frontend/expense-tracker-fe:/app
 
   db:
     image: postgres:latest
@@ -46,16 +45,6 @@ services:
       - "5050:80"
     restart: always
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080 
-    env_file:
-      - postgres_config.env
-    depends_on:
-      - db
-
   redis:
     image: redis
     restart: always
@@ -74,4 +63,4 @@ services:
 
 volumes:
   db:
-  pgadmin:  
+  pgadmin:
