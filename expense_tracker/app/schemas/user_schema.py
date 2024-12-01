@@ -12,7 +12,7 @@ class UserSchema(BaseModel):
     date_of_birth: datetime
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "username": "username",
                 "email": "something@example.com",
@@ -29,7 +29,7 @@ class UserLoginSchema(BaseModel):
     password: str
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {"email": "something@example.com", "password": "password"}
         }
 

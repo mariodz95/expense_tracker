@@ -6,7 +6,7 @@ class BudgetSchema(BaseModel):
     description: str
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "name": "home budget",
                 "description": "home budget",

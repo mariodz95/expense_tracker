@@ -2,7 +2,7 @@ import factory
 from factory import Faker
 
 from app.models.user_model import UserDb
-from app.internals.user.schema import UserSchema
+from app.schemas.user_schema import UserSchema
 from tests.internals.initial_model_factory import InitialBaseFactory
 
 

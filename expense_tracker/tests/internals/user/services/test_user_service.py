@@ -1,6 +1,6 @@
 from unittest.mock import AsyncMock, Mock
 
-from app.internals.user.schema import UserLoginSchema, UserOutputSchema
+from app.schemas.user_schema import UserLoginSchema, UserOutputSchema
 from app.internals.user.services import user_service
 from tests.internals.user.user_factory import UserDbFactory, UserSchemaFactory
 
