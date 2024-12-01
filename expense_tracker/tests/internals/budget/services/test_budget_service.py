@@ -1,7 +1,7 @@
 from unittest.mock import AsyncMock, Mock
 
 from app.schemas.budget_schema import BudgetSchema
-from app.internals.budget.services import budget_service
+from app.services import budget_service
 from tests.internals.budget.budget_factory import BudgetDbFactory
 from tests.internals.user.user_factory import UserDbFactory
 

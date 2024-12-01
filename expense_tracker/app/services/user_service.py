@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.internals.auth import utils
+from app.utils import utils
 from app.models.user_model import UserDb
 from app.repositories import user_repository
 from app.schemas.user_schema import (UserLoginSchema, UserOutputSchema,

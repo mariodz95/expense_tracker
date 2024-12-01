@@ -1,4 +1,4 @@
-from app.redis import redis_service
+from app.services import redis_service
 
 
 def test_connection():

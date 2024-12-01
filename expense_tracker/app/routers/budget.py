@@ -5,7 +5,7 @@ from app.config import get_config
 from app.database.setup import get_session
 from app.models.budget_model import BudgetDb
 from app.schemas.budget_schema import BudgetSchema
-from app.internals.budget.services import budget_service
+from app.services import budget_service
 
 config = get_config()
 

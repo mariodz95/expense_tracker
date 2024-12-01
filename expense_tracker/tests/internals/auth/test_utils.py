@@ -3,7 +3,7 @@ from unittest.mock import Mock
 import pytest
 from fastapi.exceptions import HTTPException
 
-from app.internals.auth import utils
+from app.utils import utils
 from tests.internals.user.user_factory import UserSchemaFactory
 
 

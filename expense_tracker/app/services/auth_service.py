@@ -1,7 +1,7 @@
 from fastapi.exceptions import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.internals.auth.utils import generate_token, verify_password
+from app.utils.utils import generate_token, verify_password
 from app.schemas.user_schema import (UserLoginSchema, UserOutputSchema,
                                        UserSchema)
 from app.services import user_service
