@@ -6,13 +6,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
 from app.models.user_model import UserDb
-from app.schemas.user_schema import UserSchema
+from app.schemas.user_schema import UserSchema, SignUpSchema
 
 logger = logging.getLogger(__name__)
 
 
-async def create(user: UserSchema, session: AsyncSession, password_hash: str) -> UserDb:
-    db_user = UserDb(password_hash=password_hash, **user.dict())
+async def create(user: SignUpSchema, session: AsyncSession, password_hash: str) -> UserDb:
+    db_user = UserDb(password_hash=password_hash, **user.model_dump())
     try:
         session.add(db_user)
         await session.commit()
@@ -22,7 +22,7 @@ async def create(user: UserSchema, session: AsyncSession, password_hash: str) ->
     except IntegrityError as e:
         await session.rollback()
         logger.error(e)
-        raise HTTPException(500, detail="Email is already used.")
+        raise HTTPException(500, detail="Email or username is already used.")
     except Exception as e:
         logger.error(e)
         raise HTTPException(500, detail="Something is wrong.")

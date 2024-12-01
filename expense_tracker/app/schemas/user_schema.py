@@ -3,13 +3,27 @@ from datetime import datetime
 from pydantic import BaseModel, EmailStr, SecretStr
 
 
+class SignUpSchema(BaseModel):
+    username: str
+    email: EmailStr
+    password: SecretStr
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "username": "username",
+                "email": "something@example.com",
+                "password": "password",
+            }
+        }
+
+
 class UserSchema(BaseModel):
     username: str
     email: EmailStr
     password: SecretStr
-    first_name: str
-    last_name: str
-    date_of_birth: datetime
+    first_name: str | None = None
+    last_name: str | None = None
+    date_of_birth: datetime | None = None
 
     class Config:
         json_schema_extra = {
@@ -37,6 +51,4 @@ class UserLoginSchema(BaseModel):
 class UserOutputSchema(BaseModel):
     username: str
     email: EmailStr
-    first_name: str
-    last_name: str
-    date_of_birth: datetime
+
