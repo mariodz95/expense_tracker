@@ -2,9 +2,11 @@ autoflake
 alembic
 asyncpg
 beanie
+black
 factory-boy
 fastapi
 httpx
+isort
 orjson
 passlib
 pydantic[email]

@@ -3,8 +3,8 @@ from unittest.mock import AsyncMock, Mock, call
 import pytest
 from fastapi.exceptions import HTTPException
 
-from app.services import auth_service
 from app.schemas.user_schema import UserLoginSchema, UserOutputSchema
+from app.services import auth_service
 from tests.internals.user.user_factory import UserDbFactory, UserSchemaFactory
 
 

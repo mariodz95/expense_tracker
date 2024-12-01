@@ -3,8 +3,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import get_config
 from app.database.setup import get_session
+from app.schemas.user_schema import (UserLoginSchema, UserOutputSchema,
+                                     UserSchema)
 from app.services import auth_service
-from app.schemas.user_schema import UserLoginSchema, UserOutputSchema, UserSchema
 
 config = get_config()
 router = APIRouter()

@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -30,8 +32,6 @@ app.add_middleware(
 )
 
 
-@app.on_event("startup")
-async def app_init():
-    # async with engine.begin() as conn:
-    #     await conn.run_sync(SQLModel.metadata.create_all)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     print("App startup complete")

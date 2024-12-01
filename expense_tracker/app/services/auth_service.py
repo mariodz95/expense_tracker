@@ -1,10 +1,10 @@
 from fastapi.exceptions import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.utils.utils import generate_token, verify_password
 from app.schemas.user_schema import (UserLoginSchema, UserOutputSchema,
-                                       UserSchema)
+                                     UserSchema)
 from app.services import user_service
+from app.utils.utils import generate_token, verify_password
 
 
 async def create_user(user: UserSchema, session: AsyncSession) -> UserOutputSchema:
