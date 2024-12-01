@@ -15,6 +15,7 @@ Web app for tracking your budget.
 * Pydantic [Pydantic documentation](https://docs.pydantic.dev/)
 * SQLModel [SQLModel documentation](https://sqlmodel.tiangolo.com/)
 * Postgresql [Postgresql documentation](https://www.postgresql.org/)
+* Redis [Redis documentation](https://redis.io/docs/latest/)
 
 ## Project setup
 
@@ -64,9 +65,9 @@ docker compose -p expense-tracker -f docker/compose.yml down
 ### With the container running, the app should now be reachable
 
 * [http://localhost:7000](http://localhost:7000)
+* [http://localhost:3000](http://localhost:3000)
 * [Health check](http://localhost:7000/health)
 * [OpenAPI/Swagger](http://localhost:7000/docs)
-* [Adminer](http://localhost:8080/)
 * [PgAdmin](http://localhost:5050/browser/)
 
 

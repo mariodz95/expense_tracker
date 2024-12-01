@@ -14,10 +14,11 @@ services:
       - config.env
     depends_on:
       - db
-
+      - redis
+  
   expense-tracker-fe:
     build:
-      context: ..  # This should be properly indented under build
+      context: ..
       dockerfile: ./docker/Dockerfile.fe
     ports:
      - "3000:3000"
@@ -46,10 +47,13 @@ services:
     restart: always
 
   redis:
-    image: redis
+    image: redis:latest
     restart: always
     ports:
-      - 6379:6379 
+      - "6379:6379"
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
 
   redis-commander:
     image: rediscommander/redis-commander:latest
