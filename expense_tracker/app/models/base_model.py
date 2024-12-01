@@ -10,5 +10,5 @@ class BaseModelDb(SQLModel):
     date_updated_at: datetime = Field(default_factory=lambda: datetime.utcnow())
 
     class Config:
-        orm_mode = True
-        allow_population_by_field_name = True
+        from_attributes = True
+        populate_by_name = True

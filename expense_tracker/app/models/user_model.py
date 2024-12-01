@@ -5,10 +5,10 @@ from typing import TYPE_CHECKING, Optional
 from pydantic import EmailStr
 from sqlmodel import VARCHAR, Column, Field, Relationship, SQLModel
 
-from app.internals.model import BaseModelDb
+from app.models.base_model import BaseModelDb
 
 if TYPE_CHECKING:
-    from app.internals.budget.model import BudgetDb
+    from app.models.budget_model import BudgetDb
 
 
 class UserBudgetLink(SQLModel, table=True):
@@ -32,9 +32,9 @@ class UserDb(BaseModelDb, table=True):
     username: str = Field(sa_column=Column("username", VARCHAR, unique=True))
     email: EmailStr = Field(sa_column=Column("email", VARCHAR, unique=True))
     password_hash: str = Field(nullable=False)
-    first_name: str = Field(nullable=False)
-    last_name: str = Field(nullable=False)
-    date_of_birth: datetime = Field(nullable=False, default_factory=datetime.utcnow)
+    first_name: str = Field(nullable=True)
+    last_name: str = Field(nullable=True)
+    date_of_birth: datetime = Field(nullable=True)
     budgets: list["BudgetDb"] = Relationship(
         back_populates="users", link_model=UserBudgetLink
     )

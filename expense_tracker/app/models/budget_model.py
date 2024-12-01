@@ -3,11 +3,11 @@ from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship
 
-from app.internals.model import BaseModelDb
-from app.internals.user.model import UserBudgetLink, UserDb
+from app.models.base_model import BaseModelDb
+from app.models.user_model import UserBudgetLink, UserDb
 
 if TYPE_CHECKING:
-    from app.internals.user.model import UserDb
+    from app.models.user_model import UserDb
 
 
 class BudgetDb(BaseModelDb, table=True):

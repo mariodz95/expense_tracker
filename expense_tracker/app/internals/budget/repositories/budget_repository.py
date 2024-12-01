@@ -1,8 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.internals.budget.model import BudgetDb
+from app.models.budget_model import BudgetDb
 from app.internals.budget.schema import BudgetSchema
-from app.internals.user.model import UserDb
+from app.models.user_model import UserDb
 
 
 async def create(budget: BudgetSchema, user: UserDb, session: AsyncSession) -> BudgetDb:

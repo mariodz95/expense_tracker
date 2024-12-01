@@ -1,7 +1,7 @@
 import factory
-from factory import Faker
+from factoy import Faker
 
-from app.internals.budget.model import BudgetDb
+from app.models.budget_model import BudgetDb
 from app.internals.budget.schema import BudgetSchema
 from tests.internals.initial_model_factory import InitialBaseFactory
 

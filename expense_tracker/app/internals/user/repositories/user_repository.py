@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
-from app.internals.user.model import UserDb
+from app.models.user_model import UserDb
 from app.internals.user.schema import UserSchema
 
 logger = logging.getLogger(__name__)

@@ -3,7 +3,7 @@ from fastapi.exceptions import HTTPException
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.internals.user.model import UserDb
+from app.models.user_model import UserDb
 from app.internals.user.repositories import user_repository
 from tests.internals.user.user_factory import UserDbFactory, UserSchemaFactory
 
