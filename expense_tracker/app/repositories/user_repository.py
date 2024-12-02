@@ -11,7 +11,9 @@ from app.schemas.user_schema import SignUpSchema
 logger = logging.getLogger(__name__)
 
 
-async def create(user: SignUpSchema, session: AsyncSession, password_hash: str) -> UserDb:
+async def create(
+    user: SignUpSchema, session: AsyncSession, password_hash: str
+) -> UserDb:
     db_user = UserDb(password_hash=password_hash, **user.model_dump())
     try:
         session.add(db_user)

@@ -7,6 +7,7 @@ class SignUpSchema(BaseModel):
     username: str
     email: EmailStr
     password: SecretStr
+
     class Config:
         json_schema_extra = {
             "example": {
@@ -51,4 +52,3 @@ class UserLoginSchema(BaseModel):
 class UserOutputSchema(BaseModel):
     username: str
     email: EmailStr
-
