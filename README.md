@@ -68,7 +68,7 @@ docker compose -p expense-tracker -f docker/compose.yml down
 * [http://localhost:3000](http://localhost:3000)
 * [Health check](http://localhost:7000/health)
 * [OpenAPI/Swagger](http://localhost:7000/docs)
-* [PgAdmin](http://localhost:5050/browser/)
+* [PgAdmin](http://localhost:5050/#browser/)
 
 
 ## Tests

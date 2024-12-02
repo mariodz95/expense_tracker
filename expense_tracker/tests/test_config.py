@@ -10,4 +10,4 @@ def test_Config(config_dict):
 def test_get_config(config_dict):
     actual = uut.get_config()
 
-    assert actual.dict() == config_dict
+    assert actual.model_dump() == config_dict

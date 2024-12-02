@@ -8,7 +8,7 @@ from tests.internals.budget.budget_factory import BudgetDbFactory
 async def test_create(client, mocker):
     json_data = {"name": "home budget", "description": "home budget"}
     budget = BudgetDbFactory.build()
-    budget_json = orjson.dumps(budget.dict()).decode()
+    budget_json = orjson.dumps(budget.model_dump()).decode()
     budget_json_dict = orjson.loads(budget_json)
     expected = budget_json_dict
 

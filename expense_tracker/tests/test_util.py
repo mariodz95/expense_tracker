@@ -35,7 +35,7 @@ class SomeClass(BaseModel):
 
 
 def test_populate_env_vars(_some_class_env_setup, some_class_dict):
-    expected = SomeClass(**some_class_dict).dict(exclude_defaults=True)
+    expected = SomeClass(**some_class_dict).model_dump(exclude_defaults=True)
     expected["secret_attr"] = "secret"
 
     actual = util.populate_env_vars(SomeClass)

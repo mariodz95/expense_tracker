@@ -1,4 +1,5 @@
 import os
+import typing
 from typing import Type, get_type_hints
 
 from pydantic import SecretStr
@@ -21,6 +22,8 @@ def populate_env_vars(doc_model: Type[PydanticModel]) -> dict:
             continue
         elif value_type is bool:
             env_vars[key] = value.lower() == "true"
+        elif value_type is typing.List[str]:
+            env_vars[key] = value.split(",")
         elif value_type is SecretStr:
             env_vars[key] = value
         else:

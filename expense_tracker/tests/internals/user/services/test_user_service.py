@@ -8,7 +8,7 @@ from tests.internals.user.user_factory import UserDbFactory, UserSchemaFactory
 async def test_create(mocker, session_fixture):
     user = UserSchemaFactory()
     db_user = UserDbFactory.build()
-    expected = UserOutputSchema(**db_user.dict())
+    expected = UserOutputSchema(**db_user.model_dump())
 
     utils_get_password_hash_mock = mocker.patch(
         "app.internals.user.services.user_service.utils.get_password_hash",

@@ -9,7 +9,7 @@ from tests.internals.user.user_factory import UserSchemaFactory
 def test_signup(client, mocker, session_fixture):
     user = UserSchemaFactory()
     user.password = "password"
-    user_json = orjson.dumps(user.dict()).decode()
+    user_json = orjson.dumps(user.model_dump()).decode()
     user_json_dict = orjson.loads(user_json)
     expected = user_json_dict
 
@@ -28,7 +28,7 @@ def test_signup(client, mocker, session_fixture):
 def test_login(client, mocker):
     user = UserSchemaFactory()
     user.password = "password"
-    user_json = orjson.dumps(user.dict()).decode()
+    user_json = orjson.dumps(user.model_dump()).decode()
     user_json_dict = orjson.loads(user_json)
     user_credentials = {"email": "test@email.com", "password": "testpassword"}
     auth_service_response = {

@@ -6,7 +6,7 @@ from app.schemas.budget_schema import BudgetSchema
 
 
 async def create(budget: BudgetSchema, user: UserDb, session: AsyncSession) -> BudgetDb:
-    budget_db = BudgetDb(**budget.dict(), users=[user])
+    budget_db = BudgetDb(**budget.model_dump(), users=[user])
     session.add(budget_db)
     await session.commit()
     await session.refresh(budget_db)

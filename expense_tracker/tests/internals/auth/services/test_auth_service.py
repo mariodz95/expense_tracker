@@ -24,7 +24,7 @@ async def test_create_user(mocker, session_fixture):
 async def test_login(mocker, session_fixture):
     credentials = UserLoginSchema(email="test@email.com", password="password")
     db_user = UserDbFactory.build()
-    user_schema = UserOutputSchema(**db_user.dict())
+    user_schema = UserOutputSchema(**db_user.model_dump())
     expected = {"access_token": "token", "refresh_token": "token", "user": user_schema}
     user_service_get_mock = mocker.patch(
         "app.internals.auth.services.auth_service.user_service.get",

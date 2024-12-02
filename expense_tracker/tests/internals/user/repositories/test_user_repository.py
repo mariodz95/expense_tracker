@@ -11,7 +11,7 @@ from tests.internals.user.user_factory import UserDbFactory, UserSchemaFactory
 async def test_create(session_fixture):
     user_schema = UserSchemaFactory()
     password_hash = "password_hash"
-    expected = UserDb(password_hash=password_hash, **user_schema.dict())
+    expected = UserDb(password_hash=password_hash, **user_schema.model_dumps())
 
     db_user = await user_repository.create(user_schema, session_fixture, password_hash)
 

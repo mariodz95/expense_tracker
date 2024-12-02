@@ -5,9 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_config
 from app.routers.router import router
-from alembic.config import Config
-from alembic import command
-import asyncio
+
 
 def app_settings() -> dict:
     config = get_config()
@@ -19,16 +17,9 @@ def app_settings() -> dict:
     return settings
 
 
-async def run_migrations():
-    alembic_cfg = Config("alembic.ini")
-    await asyncio.to_thread(command.upgrade, alembic_cfg, "head")
-
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Starting up...")
-    print("run alembic upgrade head...")
-    await run_migrations()
     yield
     print("Shutting down...")
 
