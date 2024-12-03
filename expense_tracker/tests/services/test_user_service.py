@@ -11,7 +11,7 @@ async def test_create(mocker, session_fixture):
     expected = UserOutputSchema(**db_user.model_dump())
 
     utils_get_password_hash_mock = mocker.patch(
-        "app.services.user_service.utils.get_password_hash",
+        "app.services.user_service.auth_utils.get_password_hash",
         Mock(return_value="password_hash"),
     )
     user_repository_create_mock = mocker.patch(
