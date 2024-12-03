@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.schemas.user_schema import (SignUpSchema, UserLoginSchema,
                                      UserOutputSchema)
 from app.services import user_service
-from app.utils.utils import generate_token, verify_password
+from app.utils.auth_utils import generate_token, verify_password
 
 
 async def create_user(user: SignUpSchema, session: AsyncSession) -> UserOutputSchema:

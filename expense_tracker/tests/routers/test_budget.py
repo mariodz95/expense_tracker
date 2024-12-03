@@ -2,7 +2,7 @@ from unittest.mock import AsyncMock
 
 import orjson
 
-from tests.internals.budget.budget_factory import BudgetDbFactory
+from tests.factories.budget_factory import BudgetDbFactory
 
 
 async def test_create(client, mocker):

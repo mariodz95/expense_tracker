@@ -2,7 +2,7 @@ import factory
 
 from app.models.user_model import UserDb
 from app.schemas.user_schema import UserSchema
-from tests.internals.initial_model_factory import InitialBaseFactory
+from tests.factories.initial_model_factory import InitialBaseFactory
 
 
 class UserSchemaFactory(factory.Factory):

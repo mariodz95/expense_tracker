@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock
 import orjson
 from pydantic import SecretStr
 
-from tests.internals.user.user_factory import UserSchemaFactory
+from tests.factories.user_factory import UserSchemaFactory
 
 
 def test_signup(client, mocker, session_fixture):

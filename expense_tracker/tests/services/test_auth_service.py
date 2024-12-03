@@ -5,13 +5,13 @@ from fastapi.exceptions import HTTPException
 
 from app.schemas.user_schema import UserLoginSchema, UserOutputSchema
 from app.services import auth_service
-from tests.internals.user.user_factory import UserDbFactory, UserSchemaFactory
+from tests.factories.user_factory import UserDbFactory, UserSchemaFactory
 
 
 async def test_create_user(mocker, session_fixture):
     user = UserSchemaFactory()
     create_mock = mocker.patch(
-        "app.internals.auth.services.auth_service.user_service.create",
+        "app.services.auth_service.user_service.create",
         AsyncMock(return_value=user),
     )
 
@@ -27,15 +27,15 @@ async def test_login(mocker, session_fixture):
     user_schema = UserOutputSchema(**db_user.model_dump())
     expected = {"access_token": "token", "refresh_token": "token", "user": user_schema}
     user_service_get_mock = mocker.patch(
-        "app.internals.auth.services.auth_service.user_service.get",
+        "app.services.auth_service.user_service.get",
         AsyncMock(return_value=db_user),
     )
     generate_token_mock = mocker.patch(
-        "app.internals.auth.services.auth_service.generate_token",
+        "app.services.auth_service.generate_token",
         Mock(return_value="token"),
     )
     verify_password_mock = mocker.patch(
-        "app.internals.auth.services.auth_service.verify_password",
+        "app.services.auth_service.verify_password",
         Mock(return_value=True),
     )
     response = await auth_service.login(credentials, session_fixture)
@@ -55,11 +55,11 @@ async def test_login_catch_exception(mocker, session_fixture):
     credentials = UserLoginSchema(email="test@email.com", password="password")
     db_user = UserDbFactory.build()
     mocker.patch(
-        "app.internals.auth.services.auth_service.user_service.get",
+        "app.services.auth_service.user_service.get",
         AsyncMock(return_value=db_user),
     )
     mocker.patch(
-        "app.internals.auth.services.auth_service.verify_password",
+        "app.services.auth_service.verify_password",
         Mock(return_value=False),
     )
 

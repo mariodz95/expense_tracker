@@ -2,7 +2,7 @@ from unittest.mock import AsyncMock, Mock
 
 from app.schemas.user_schema import UserLoginSchema, UserOutputSchema
 from app.services import user_service
-from tests.internals.user.user_factory import UserDbFactory, UserSchemaFactory
+from tests.factories.user_factory import UserDbFactory, UserSchemaFactory
 
 
 async def test_create(mocker, session_fixture):
@@ -11,11 +11,11 @@ async def test_create(mocker, session_fixture):
     expected = UserOutputSchema(**db_user.model_dump())
 
     utils_get_password_hash_mock = mocker.patch(
-        "app.internals.user.services.user_service.utils.get_password_hash",
+        "app.services.user_service.utils.get_password_hash",
         Mock(return_value="password_hash"),
     )
     user_repository_create_mock = mocker.patch(
-        "app.internals.user.services.user_service.user_repository.create",
+        "app.services.user_service.user_repository.create",
         AsyncMock(return_value=db_user),
     )
     response = await user_service.create(user, session_fixture)
@@ -34,7 +34,7 @@ async def test_get(mocker, session_fixture):
     user = UserDbFactory.build()
     expected = user
     user_repository_get_mock = mocker.patch(
-        "app.internals.user.services.user_service.user_repository.get",
+        "app.services.user_service.user_repository.get",
         AsyncMock(return_value=user),
     )
 

@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.user_model import UserDb
 from app.repositories import user_repository
-from tests.internals.user.user_factory import UserDbFactory, UserSchemaFactory
+from tests.factories.user_factory import UserDbFactory, UserSchemaFactory
 
 
 async def test_create(session_fixture):

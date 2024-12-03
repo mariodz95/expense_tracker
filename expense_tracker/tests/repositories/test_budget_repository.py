@@ -1,6 +1,6 @@
 from app.repositories import budget_repository
-from tests.internals.budget.budget_factory import BudgetSchemaFactory
-from tests.internals.user.user_factory import UserDbFactory
+from tests.factories.budget_factory import BudgetSchemaFactory
+from tests.factories.user_factory import UserDbFactory
 
 
 async def test_create(session_fixture):

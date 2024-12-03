@@ -2,8 +2,8 @@ from unittest.mock import AsyncMock, Mock
 
 from app.schemas.budget_schema import BudgetSchema
 from app.services import budget_service
-from tests.internals.budget.budget_factory import BudgetDbFactory
-from tests.internals.user.user_factory import UserDbFactory
+from tests.factories.budget_factory import BudgetDbFactory
+from tests.factories.user_factory import UserDbFactory
 
 
 async def test_create(mocker, session_fixture):
@@ -13,15 +13,15 @@ async def test_create(mocker, session_fixture):
     expected = budget_db
     token = {"sub": "user@email.com"}
     decode_token_mock = mocker.patch(
-        "app.internals.budget.services.budget_service.decode_token",
+        "app.services.budget_service.decode_token",
         Mock(return_value=token),
     )
     user_repository_get_mock = mocker.patch(
-        "app.internals.budget.services.budget_service.user_repository.get",
+        "app.services.budget_service.user_repository.get",
         AsyncMock(return_value=user),
     )
     budget_repository_create_mock = mocker.patch(
-        "app.internals.budget.services.budget_service.budget_repository.create",
+        "app.services.budget_service.budget_repository.create",
         AsyncMock(return_value=budget_db),
     )
 

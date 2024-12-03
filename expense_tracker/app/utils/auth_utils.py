@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta
 
 from fastapi.exceptions import HTTPException
-from jwt import InvalidTokenError, decode as jwt_decode, encode as jwt_encode
+import jwt
+from jwt import InvalidTokenError
 from passlib.context import CryptContext
 
 from app.config import get_config
@@ -27,12 +28,12 @@ def generate_token(user: UserSchema, claim: str):
         "exp": expire_at,
     }
 
-    return jwt_encode(payload, config.jwt_secret, algorithm=config.jwt_algorithm)
+    return jwt.encode(payload, config.jwt_secret, algorithm=config.jwt_algorithm)
 
 
 def decode_token(token: str):
     try:
-        return jwt_decode(
+        return jwt.decode(
             jwt=token, key=config.jwt_secret, algorithms=config.jwt_algorithm
         )
     except InvalidTokenError as e:

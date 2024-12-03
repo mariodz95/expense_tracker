@@ -2,7 +2,7 @@ import factory
 
 from app.models.budget_model import BudgetDb
 from app.schemas.budget_schema import BudgetSchema
-from tests.internals.initial_model_factory import InitialBaseFactory
+from .initial_model_factory import InitialBaseFactory
 
 
 class BudgetDbFactory(InitialBaseFactory):
