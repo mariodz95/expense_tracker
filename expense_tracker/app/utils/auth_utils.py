@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import jwt
 from fastapi.exceptions import HTTPException
@@ -21,7 +21,7 @@ def get_password_hash(password):
 
 
 def generate_token(user: UserSchema, claim: str):
-    expire_at = datetime.utcnow() + timedelta(minutes=config.jwt_expiration)
+    expire_at = datetime.now(timezone.utc) + timedelta(minutes=config.jwt_expiration)
     payload = {
         "sub": user.email,
         "claim": claim,
