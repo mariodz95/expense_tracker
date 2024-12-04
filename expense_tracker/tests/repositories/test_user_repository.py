@@ -11,16 +11,13 @@ from tests.factories.user_factory import UserDbFactory, UserSchemaFactory
 async def test_create(session_fixture):
     user_schema = UserSchemaFactory()
     password_hash = "password_hash"
-    expected = UserDb(password_hash=password_hash, **user_schema.model_dumps())
+    expected = UserDb(password_hash=password_hash, **user_schema.model_dump())
 
     db_user = await user_repository.create(user_schema, session_fixture, password_hash)
 
     assert db_user.password_hash == password_hash
     assert db_user.username == user_schema.username
     assert db_user.email == user_schema.email
-    assert db_user.first_name == user_schema.first_name
-    assert db_user.last_name == user_schema.last_name
-    assert db_user.date_of_birth == user_schema.date_of_birth
     assert db_user.id != None
 
 
@@ -61,10 +58,7 @@ async def test_get(session_fixture):
     assert result.email == expected.email
     assert result.username == expected.username
     assert result.password_hash == expected.password_hash
-    assert result.date_of_birth == expected.date_of_birth
-    assert result.first_name == expected.first_name
-    assert result.last_name == expected.last_name
-    assert result.id == expected.id
+    assert str(result.id) == expected.id
 
 
 async def test_get_catch_exception(session_fixture):

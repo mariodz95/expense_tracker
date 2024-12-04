@@ -5,12 +5,12 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql import text
 from sqlmodel import SQLModel
 from sqlmodel.pool import StaticPool
 
 from app.main import app
 from tests.utilities import create_config_dict
-from sqlalchemy.sql import text
 
 
 @pytest.fixture

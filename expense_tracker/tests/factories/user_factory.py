@@ -27,4 +27,3 @@ class UserDbFactory(InitialBaseFactory):
     password_hash = factory.Faker("pystr")
     first_name = factory.Faker("pystr")
     last_name = factory.Faker("pystr")
-    date_of_birth = factory.Faker("date_time")

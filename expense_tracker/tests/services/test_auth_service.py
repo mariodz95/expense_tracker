@@ -18,7 +18,7 @@ async def test_create_user(mocker, session_fixture):
     response = await auth_service.create_user(user, session_fixture)
 
     assert response == user
-    create_mock.assert_called_once_with(user, session_fixture)
+    create_mock.assert_called_once_with(user=user, session=session_fixture)
 
 
 async def test_login(mocker, session_fixture):
