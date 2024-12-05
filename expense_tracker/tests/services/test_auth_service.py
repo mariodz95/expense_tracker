@@ -1,6 +1,7 @@
 from unittest.mock import AsyncMock, Mock, call
 
 import pytest
+import pytest_asyncio
 from fastapi.exceptions import HTTPException
 
 from app.schemas.user_schema import UserLoginSchema, UserOutputSchema
@@ -8,6 +9,7 @@ from app.services import auth_service
 from tests.factories.user_factory import UserDbFactory, UserSchemaFactory
 
 
+@pytest_asyncio.fixture(loop_scope="session")
 async def test_create_user(mocker, session_fixture):
     user = UserSchemaFactory()
     create_mock = mocker.patch(
@@ -21,6 +23,7 @@ async def test_create_user(mocker, session_fixture):
     create_mock.assert_called_once_with(user=user, session=session_fixture)
 
 
+@pytest_asyncio.fixture(loop_scope="session")
 async def test_login(mocker, session_fixture):
     credentials = UserLoginSchema(email="test@email.com", password="password")
     db_user = UserDbFactory.build()
@@ -51,6 +54,7 @@ async def test_login(mocker, session_fixture):
     assert response == expected
 
 
+@pytest_asyncio.fixture(loop_scope="session")
 async def test_login_catch_exception(mocker, session_fixture):
     credentials = UserLoginSchema(email="test@email.com", password="password")
     db_user = UserDbFactory.build()
@@ -67,12 +71,14 @@ async def test_login_catch_exception(mocker, session_fixture):
         await auth_service.login(credentials, session_fixture)
 
 
+@pytest_asyncio.fixture(loop_scope="session")
 async def test_authenticate():
     response = await auth_service.authenticate()
 
     assert response == None
 
 
+@pytest_asyncio.fixture(loop_scope="session")
 async def test_logout():
     response = await auth_service.logout()
 

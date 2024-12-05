@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 import factory
 
 from app.models.user_model import UserDb
@@ -21,7 +23,7 @@ class UserDbFactory(InitialBaseFactory):
     class Meta:
         model = UserDb
 
-    id = factory.Faker("uuid4")
+    id = uuid4()
     username = factory.Faker("pystr")
     email = factory.Faker("email")
     password_hash = factory.Faker("pystr")

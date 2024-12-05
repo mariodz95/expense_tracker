@@ -1,11 +1,14 @@
 from unittest.mock import AsyncMock, Mock
 
+import pytest_asyncio
+
 from app.schemas.budget_schema import BudgetSchema
 from app.services import budget_service
 from tests.factories.budget_factory import BudgetDbFactory
 from tests.factories.user_factory import UserDbFactory
 
 
+@pytest_asyncio.fixture(loop_scope="session")
 async def test_create(mocker, session_fixture):
     budget = BudgetSchema(name="test budget", description="test budget")
     budget_db = BudgetDbFactory.build()

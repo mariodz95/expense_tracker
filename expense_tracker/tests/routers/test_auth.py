@@ -7,7 +7,7 @@ from app.schemas.user_schema import UserOutputSchema
 from tests.factories.user_factory import UserSchemaFactory
 
 
-def test_signup(client, mocker, session_fixture):
+def test_signup(client, mocker):
     user = UserSchemaFactory()
     user.password = "password"
     user_json = orjson.dumps(user.model_dump()).decode()

@@ -1,14 +1,15 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class BudgetSchema(BaseModel):
     name: str
     description: str
 
-    class Config:
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "name": "home budget",
                 "description": "home budget",
             }
         }
+    )
