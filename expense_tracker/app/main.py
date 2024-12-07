@@ -1,10 +1,17 @@
+import logging
 from contextlib import asynccontextmanager
+from logging.config import dictConfig
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_config
 from app.routers.router import router
+
+from .logger_config import LogConfig
+
+dictConfig(LogConfig().model_dump())
+logger = logging.getLogger("expense_tracker")
 
 
 def app_settings() -> dict:
@@ -19,9 +26,9 @@ def app_settings() -> dict:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("Starting up...")
+    logger.info("Application started.")
     yield
-    print("Shutting down...")
+    logger.info("Application shutdown.")
 
 
 app = FastAPI(**app_settings(), lifespan=lifespan)
