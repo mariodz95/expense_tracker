@@ -29,6 +29,7 @@ async def create(
         logger.error(f"Create user failed {e}.")
         raise HTTPException(500, detail="Email or username is already used.")
     except Exception:
+        await session.rollback()
         logger.error("Create user failed.")
         raise HTTPException(500, detail="Something is wrong.")
 
