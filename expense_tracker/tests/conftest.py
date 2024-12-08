@@ -1,3 +1,4 @@
+import asyncio
 from typing import AsyncGenerator
 
 import pytest
@@ -32,7 +33,6 @@ engine = create_async_engine(
 
 @pytest.fixture(scope="session")
 def event_loop():
-    """Overrides pytest default function scoped event loop"""
     event_loop = asyncio.get_event_loop()
     yield event_loop
     event_loop.close()

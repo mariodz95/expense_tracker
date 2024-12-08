@@ -1,6 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.user_model import UserDb
 from app.repositories import user_repository
 from app.schemas.user_schema import (SignUpSchema, UserLoginSchema,
                                      UserOutputSchema)
@@ -14,5 +13,6 @@ async def create(user: SignUpSchema, session: AsyncSession) -> UserOutputSchema:
     return UserOutputSchema(**db_user.model_dump())
 
 
-async def get(credentials: UserLoginSchema, session: AsyncSession) -> UserDb:
-    return await user_repository.get(credentials.email, session)
+async def get(credentials: UserLoginSchema, session: AsyncSession) -> UserOutputSchema:
+    db_user = await user_repository.get(credentials.email, session)
+    return UserOutputSchema(**db_user.model_dump())

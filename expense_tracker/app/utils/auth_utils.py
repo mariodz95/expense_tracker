@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime, timedelta, timezone
 
 import jwt
@@ -7,6 +8,8 @@ from passlib.context import CryptContext
 
 from app.config import get_config
 from app.schemas.user_schema import UserSchema
+
+logger = logging.getLogger("expense_tracker")
 
 config = get_config()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -37,4 +40,5 @@ def decode_token(token: str):
             jwt=token, key=config.jwt_secret, algorithms=config.jwt_algorithm
         )
     except InvalidTokenError as e:
+        logger.error(e)
         raise HTTPException(401, detail=f"Invalid token. {e}.")

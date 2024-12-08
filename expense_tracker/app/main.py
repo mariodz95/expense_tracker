@@ -11,7 +11,7 @@ from app.routers.router import router
 from .logger_config import LogConfig
 
 dictConfig(LogConfig().model_dump())
-logger = logging.getLogger("expense_tracker")
+logger = logging.getLogger("uvicorn.error")
 
 
 def app_settings() -> dict:

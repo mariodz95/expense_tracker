@@ -1,13 +1,10 @@
 from unittest.mock import AsyncMock, Mock
 
-import pytest_asyncio
-
 from app.schemas.user_schema import UserLoginSchema, UserOutputSchema
 from app.services import user_service
 from tests.factories.user_factory import UserDbFactory, UserSchemaFactory
 
 
-@pytest_asyncio.fixture(loop_scope="session")
 async def test_create(mocker, session_fixture):
     user = UserSchemaFactory()
     db_user = UserDbFactory.build()
@@ -32,11 +29,10 @@ async def test_create(mocker, session_fixture):
     )
 
 
-@pytest_asyncio.fixture(loop_scope="session")
 async def test_get(mocker, session_fixture):
     credentials = UserLoginSchema(email="test@email.com", password="password")
     user = UserDbFactory.build()
-    expected = user
+    expected = UserOutputSchema(**user.model_dump())
     user_repository_get_mock = mocker.patch(
         "app.services.user_service.user_repository.get",
         AsyncMock(return_value=user),

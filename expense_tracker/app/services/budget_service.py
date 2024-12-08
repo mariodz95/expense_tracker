@@ -7,7 +7,10 @@ from app.utils.auth_utils import decode_token
 
 
 async def create(budget: BudgetSchema, token: str, session: AsyncSession) -> BudgetDb:
-    decoded_token = decode_token(token)
-    user = await user_repository.get(decoded_token["sub"], session)
+    decoded_token = decode_token(token=token)
+    user = await user_repository.get(email=decoded_token["sub"], session=session)
+    created_budget = await budget_repository.create(
+        budget=budget, user=user, session=session
+    )
 
-    return await budget_repository.create(budget, user, session)
+    return BudgetSchema(**created_budget.model_dump())

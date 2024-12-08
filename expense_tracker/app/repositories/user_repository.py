@@ -1,14 +1,17 @@
 import logging
+from logging.config import dictConfig
 
 from fastapi.exceptions import HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
+from app.logger_config import LogConfig
 from app.models.user_model import UserDb
 from app.schemas.user_schema import SignUpSchema
 
-logger = logging.getLogger(__name__)
+dictConfig(LogConfig().model_dump())
+logger = logging.getLogger("expense_tracker")
 
 
 async def create(
@@ -23,10 +26,10 @@ async def create(
         return db_user
     except IntegrityError as e:
         await session.rollback()
-        logger.error(e)
+        logger.error(f"Create user failed {e}.")
         raise HTTPException(500, detail="Email or username is already used.")
-    except Exception as e:
-        logger.error(e)
+    except Exception:
+        logger.error("Create user failed.")
         raise HTTPException(500, detail="Something is wrong.")
 
 
