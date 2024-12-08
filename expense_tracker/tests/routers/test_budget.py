@@ -1,12 +1,10 @@
 from unittest.mock import AsyncMock
 
 import orjson
-import pytest_asyncio
 
 from tests.factories.budget_factory import BudgetDbFactory
 
 
-@pytest_asyncio.fixture(loop_scope="session")
 async def test_create(client, mocker):
     json_data = {"name": "home budget", "description": "home budget"}
     budget = BudgetDbFactory.build()

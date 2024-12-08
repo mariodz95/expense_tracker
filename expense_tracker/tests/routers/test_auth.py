@@ -13,7 +13,7 @@ def test_signup(client, mocker):
     user_json = orjson.dumps(user.model_dump()).decode()
     user_json_dict = orjson.loads(user_json)
 
-    auth_service_mock = mocker.patch(
+    mocker.patch(
         "app.routers.auth.auth_service.create_user", AsyncMock(return_value=user)
     )
 

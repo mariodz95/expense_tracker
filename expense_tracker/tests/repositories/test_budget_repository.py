@@ -1,11 +1,9 @@
-import pytest_asyncio
 
 from app.repositories import budget_repository
 from tests.factories.budget_factory import BudgetSchemaFactory
 from tests.factories.user_factory import UserDbFactory
 
 
-@pytest_asyncio.fixture(loop_scope="session")
 async def test_create(session_fixture):
     user_db = UserDbFactory.build()
     budget_schema = BudgetSchemaFactory()
