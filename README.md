@@ -83,6 +83,12 @@ pytest
 pytest --cov=app tests --cov-branch --cov-report html:coverage
 ```
 
+#### Mutation testing
+
+```
+mutmut run
+```
+
 #### Migrations 
 
 Connect to expense-tracker container and run:

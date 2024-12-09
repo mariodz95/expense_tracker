@@ -27,11 +27,11 @@ async def create(
     except IntegrityError as e:
         await session.rollback()
         logger.error(f"Create user failed {e}.")
-        raise HTTPException(500, detail="Email or username is already used.")
-    except Exception:
+        raise HTTPException(409, detail="Email or username is already used.")
+    except Exception as e:
         await session.rollback()
-        logger.error("Create user failed.")
-        raise HTTPException(500, detail="Something is wrong.")
+        logger.error(f"Create user failed {e}.")
+        raise HTTPException(409, detail="Create user failed.")
 
 
 async def get(email: str, session: AsyncSession) -> UserDb:
@@ -39,6 +39,6 @@ async def get(email: str, session: AsyncSession) -> UserDb:
     result = await session.execute(statement)
     user = result.scalar()
     if not user:
-        raise HTTPException(404, detail="Invalid email or password")
+        raise HTTPException(404, detail="Invalid email or password.")
 
     return user

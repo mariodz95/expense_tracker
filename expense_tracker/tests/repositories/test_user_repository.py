@@ -28,8 +28,12 @@ async def test_create_catch_exception(mocker):
 
     mocker.patch.object(session, "commit", side_effect=SQLAlchemyError)
 
-    with pytest.raises(HTTPException):
+    with pytest.raises(HTTPException) as exc_info:
         await user_repository.create(user_schema, session, password_hash)
+
+    exception = exc_info.value
+    assert exception.status_code == 409
+    assert exception.detail == "Create user failed."
 
 
 async def test_create_catch_integrity_error_duplicate_email(session_fixture):
@@ -37,8 +41,12 @@ async def test_create_catch_integrity_error_duplicate_email(session_fixture):
     user_schema = UserSchemaFactory.build(email="email@test.com")
     password_hash = "password_hash"
 
-    with pytest.raises(HTTPException):
+    with pytest.raises(HTTPException) as exc_info:
         await user_repository.create(user_schema, session_fixture, password_hash)
+
+    exception = exc_info.value
+    assert exception.status_code == 409
+    assert exception.detail == "Email or username is already used."
 
 
 async def test_create_catch_integrity_error_duplicate_username(session_fixture):
@@ -64,5 +72,9 @@ async def test_get(session_fixture):
 async def test_get_catch_exception(session_fixture):
     await UserDbFactory.create(email="email@test.com")
 
-    with pytest.raises(HTTPException):
+    with pytest.raises(HTTPException) as exc_info:
         await user_repository.get("email2@test.com", session_fixture)
+
+    exception = exc_info.value
+    assert exception.status_code == 404
+    assert exception.detail == "Invalid email or password."

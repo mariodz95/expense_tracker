@@ -1,4 +1,3 @@
-
 from app.repositories import budget_repository
 from tests.factories.budget_factory import BudgetSchemaFactory
 from tests.factories.user_factory import UserDbFactory
