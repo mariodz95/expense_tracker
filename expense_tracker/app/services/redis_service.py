@@ -10,3 +10,11 @@ pool = ConnectionPool.from_url(config.redis_uri, decode_responses=True)
 
 def connection() -> Redis:
     return Redis(connection_pool=pool)
+
+
+def insert(key: str, value: str) -> bool:
+    connection.set('key', 'value')  # Set a key-value pair
+
+
+def get(key: str) -> str:
+    connection.get(key)

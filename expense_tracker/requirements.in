@@ -2,6 +2,7 @@ autoflake
 alembic
 asyncpg
 beanie
+bcrypt
 black
 factory-boy
 fastapi

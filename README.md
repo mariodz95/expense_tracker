@@ -16,6 +16,7 @@ Web app for tracking your budget.
 * SQLModel [SQLModel documentation](https://sqlmodel.tiangolo.com/)
 * Postgresql [Postgresql documentation](https://www.postgresql.org/)
 * Redis [Redis documentation](https://redis.io/docs/latest/)
+* React [React documentation](https://react.dev/)
 
 ## Project setup
 
@@ -112,7 +113,7 @@ alembic upgrade head
 
 ```
 sh lint.sh
-``
+```
 
 ### Run app locally
 
