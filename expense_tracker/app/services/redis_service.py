@@ -13,7 +13,7 @@ def connection() -> Redis:
 
 
 def insert(key: str, value: str) -> bool:
-    connection.set('key', 'value')  # Set a key-value pair
+    connection.set("key", "value")
 
 
 def get(key: str) -> str:

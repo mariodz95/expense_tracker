@@ -8,7 +8,6 @@ class LogConfig(BaseModel):
     LOG_FORMAT: str = "%(levelprefix)s | %(asctime)s | %(message)s"
     LOG_LEVEL: str = "DEBUG"
 
-    # Logging config
     version: int = 1
     disable_existing_loggers: bool = False
     formatters: dict = {
