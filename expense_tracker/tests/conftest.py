@@ -54,3 +54,15 @@ async def session_fixture() -> AsyncGenerator[AsyncSession, None]:
             # Use `text()` to wrap the SQL string
             await session.execute(text(f"DELETE FROM {table.name}"))
         await session.commit()
+
+
+@pytest.fixture
+def sign_up_payload():
+    return {
+        "dob": "2025-04-30T20:15:43",
+        "email": "something@example.com",
+        "first_name": "john",
+        "last_name": "doe",
+        "password": "password",
+        "username": "username",
+    }

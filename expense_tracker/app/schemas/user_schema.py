@@ -7,6 +7,9 @@ class SignUpSchema(BaseModel):
     username: str
     email: EmailStr
     password: SecretStr
+    first_name: str
+    last_name: str
+    dob: datetime
 
     model_config = ConfigDict(
         json_schema_extra={
@@ -14,6 +17,9 @@ class SignUpSchema(BaseModel):
                 "username": "username",
                 "email": "something@example.com",
                 "password": "password",
+                "first_name": "john",
+                "last_name": "doe",
+                "dob": "2025-04-30T20:15:43",
             }
         }
     )
@@ -55,3 +61,6 @@ class UserLoginSchema(BaseModel):
 class UserOutputSchema(BaseModel):
     username: str
     email: EmailStr
+    first_name: str
+    last_name: str
+    dob: datetime

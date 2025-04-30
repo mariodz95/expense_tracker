@@ -3,26 +3,32 @@ from unittest.mock import AsyncMock
 import orjson
 from pydantic import SecretStr
 
-from app.schemas.user_schema import UserOutputSchema
 from tests.factories.user_factory import UserSchemaFactory
 
 
-def test_signup(client, mocker):
-    user = UserSchemaFactory()
-    user.password = "password"
-    user_json = orjson.dumps(user.model_dump()).decode()
-    user_json_dict = orjson.loads(user_json)
-
+def test_signup_returns_200(client, mocker, sign_up_payload):
     mocker.patch(
-        "app.routers.auth.auth_service.create_user", AsyncMock(return_value=user)
+        "app.routers.auth.auth_service.create_user",
+        AsyncMock(return_value=sign_up_payload),
     )
 
-    actual = client.post("/auth/signup", json=user_json_dict)
-    user_json_dict.pop("password", None)
-    user.password = SecretStr("password")
+    actual = client.post("/auth/signup", json=sign_up_payload)
 
     assert actual.status_code == 200
-    assert actual.json() == UserOutputSchema(**user_json_dict).model_dump()
+
+
+def test_signup_returns_expected_json(client, mocker, sign_up_payload):
+    expected: dict = sign_up_payload
+
+    mocker.patch(
+        "app.routers.auth.auth_service.create_user",
+        AsyncMock(return_value=sign_up_payload),
+    )
+
+    actual = client.post("/auth/signup", json=sign_up_payload)
+    expected.pop("password", None)
+
+    assert actual.json() == expected
 
 
 def test_login(client, mocker):
