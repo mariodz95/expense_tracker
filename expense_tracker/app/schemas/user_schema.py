@@ -1,6 +1,7 @@
-from datetime import datetime
+from datetime import datetime, timedelta
+import re
 
-from pydantic import BaseModel, ConfigDict, EmailStr, SecretStr
+from pydantic import BaseModel, ConfigDict, EmailStr, SecretStr, field_validator
 
 
 class SignUpSchema(BaseModel):
@@ -10,6 +11,22 @@ class SignUpSchema(BaseModel):
     first_name: str
     last_name: str
     dob: datetime
+
+    @field_validator("password")
+    def check_password_length(cls, value):
+        if len(value) < 6:
+            raise ValueError("Password must be at least 6 characters long.")
+        return value
+
+
+    @field_validator("dob")
+    def check_age(cls, value):
+        min_age_date = datetime.now() - timedelta(days=365*14)
+
+        if value > min_age_date:
+            raise ValueError("You must be at least 14 years old.")
+        return value
+
 
     model_config = ConfigDict(
         json_schema_extra={

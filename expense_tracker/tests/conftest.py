@@ -59,7 +59,7 @@ async def session_fixture() -> AsyncGenerator[AsyncSession, None]:
 @pytest.fixture
 def sign_up_payload():
     return {
-        "dob": "2025-04-30T20:15:43",
+        "dob": "2000-04-30T20:15:43",
         "email": "something@example.com",
         "first_name": "john",
         "last_name": "doe",
