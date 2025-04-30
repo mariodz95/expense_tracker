@@ -27,7 +27,7 @@ async def create(
     except Exception as e:
         await session.rollback()
         logger.error(f"Create user failed {e}.")
-        raise HTTPException(409, detail="Create user failed.")
+        raise HTTPException(409, detail="User signup failed.")
 
 
 async def get(email: str, session: AsyncSession) -> UserDb:

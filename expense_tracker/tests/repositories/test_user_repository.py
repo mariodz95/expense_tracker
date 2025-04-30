@@ -3,22 +3,21 @@ from fastapi.exceptions import HTTPException
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.user_model import UserDb
 from app.repositories import user_repository
 from tests.factories.user_factory import UserDbFactory, UserSchemaFactory
 
 
-async def test_create(session_fixture):
+async def test_create_returns_created_model(session_fixture):
     user_schema = UserSchemaFactory()
     password_hash = "password_hash"
-    expected = UserDb(password_hash=password_hash, **user_schema.model_dump())
 
     db_user = await user_repository.create(user_schema, session_fixture, password_hash)
 
+    for field in ["username", "email", "first_name", "last_name", "dob"]:
+        assert getattr(db_user, field) == getattr(user_schema, field)
+
     assert db_user.password_hash == password_hash
-    assert db_user.username == user_schema.username
-    assert db_user.email == user_schema.email
-    assert db_user.id != None
+    assert db_user.id is not None
 
 
 async def test_create_catch_exception(mocker):
@@ -33,7 +32,7 @@ async def test_create_catch_exception(mocker):
 
     exception = exc_info.value
     assert exception.status_code == 409
-    assert exception.detail == "Create user failed."
+    assert exception.detail == "User signup failed."
 
 
 async def test_create_catch_integrity_error_duplicate_email(session_fixture):

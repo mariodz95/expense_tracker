@@ -6,7 +6,7 @@ from datetime import datetime
 class JsonFormatter(logging.Formatter):
     def format(self, record):
         log_record = {
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).replace(tzinfo=None),
             "level": record.levelname,
             "message": record.getMessage(),
             "file": f"{record.pathname}:{record.lineno}",
