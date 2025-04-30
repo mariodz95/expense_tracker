@@ -5,7 +5,7 @@ from app.services import user_service
 from tests.factories.user_factory import UserDbFactory, UserSchemaFactory
 
 
-async def test_create(mocker, session_fixture):
+async def test_create_returns_expected_response(mocker, session_fixture):
     user = UserSchemaFactory()
     db_user = UserDbFactory.build()
     expected = UserOutputSchema(**db_user.model_dump())
@@ -21,9 +21,41 @@ async def test_create(mocker, session_fixture):
     response = await user_service.create(user, session_fixture)
 
     assert response == expected
+
+
+async def test_create_calls_auth_utils_once(mocker, session_fixture):
+    user = UserSchemaFactory()
+    db_user = UserDbFactory.build()
+
+    utils_get_password_hash_mock = mocker.patch(
+        "app.services.user_service.auth_utils.get_password_hash",
+        Mock(return_value="password_hash"),
+    )
+    mocker.patch(
+        "app.services.user_service.user_repository.create",
+        AsyncMock(return_value=db_user),
+    )
+    await user_service.create(user, session_fixture)
+
     utils_get_password_hash_mock.assert_called_once_with(
         user.password.get_secret_value()
     )
+
+
+async def test_create_calls_user_repository_once(mocker, session_fixture):
+    user = UserSchemaFactory()
+    db_user = UserDbFactory.build()
+
+    mocker.patch(
+        "app.services.user_service.auth_utils.get_password_hash",
+        Mock(return_value="password_hash"),
+    )
+    user_repository_create_mock = mocker.patch(
+        "app.services.user_service.user_repository.create",
+        AsyncMock(return_value=db_user),
+    )
+    await user_service.create(user, session_fixture)
+
     user_repository_create_mock.assert_called_once_with(
         user, session_fixture, "password_hash"
     )
