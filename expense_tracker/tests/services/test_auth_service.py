@@ -8,8 +8,9 @@ from app.services import auth_service
 from tests.factories.user_factory import UserDbFactory, UserSchemaFactory
 
 
-async def test_create_user(mocker, session_fixture):
+async def test_create_user_returns_expected_response(mocker, session_fixture):
     user = UserSchemaFactory()
+
     create_mock = mocker.patch(
         "app.services.auth_service.user_service.create",
         AsyncMock(return_value=user),
@@ -17,7 +18,20 @@ async def test_create_user(mocker, session_fixture):
 
     response = await auth_service.create_user(user, session_fixture)
 
+    create_mock.assert_called_once_with(user=user, session=session_fixture)
     assert response == user
+
+
+async def test_create_user_calls_user_service_once(mocker, session_fixture):
+    user = UserSchemaFactory()
+
+    create_mock = mocker.patch(
+        "app.services.auth_service.user_service.create",
+        AsyncMock(return_value=user),
+    )
+
+    await auth_service.create_user(user, session_fixture)
+
     create_mock.assert_called_once_with(user=user, session=session_fixture)
 
 
