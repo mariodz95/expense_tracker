@@ -25,7 +25,7 @@ class UserSchema(BaseModel):
     password: SecretStr
     first_name: str | None = None
     last_name: str | None = None
-    date_of_birth: datetime | None = None
+    dob: datetime | None = None
 
     model_config = ConfigDict(
         json_schema_extra={

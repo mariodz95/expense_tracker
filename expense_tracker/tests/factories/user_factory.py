@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from uuid import uuid4
 
 import factory
@@ -16,7 +17,7 @@ class UserSchemaFactory(factory.Factory):
     password = factory.Faker("pystr")
     first_name = factory.Faker("pystr")
     last_name = factory.Faker("pystr")
-    date_of_birth = factory.Faker("date_time")
+    dob = datetime.now(timezone.utc).replace(tzinfo=None)
 
 
 class UserDbFactory(InitialBaseFactory):
@@ -29,3 +30,4 @@ class UserDbFactory(InitialBaseFactory):
     password_hash = factory.Faker("pystr")
     first_name = factory.Faker("pystr")
     last_name = factory.Faker("pystr")
+    dob = datetime.now(timezone.utc).replace(tzinfo=None)

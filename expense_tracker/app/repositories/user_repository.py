@@ -1,17 +1,13 @@
-import logging
-from logging.config import dictConfig
-
 from fastapi.exceptions import HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
-from app.logger_config import LogConfig
+from app.logger_config import setup_logger
 from app.models.user_model import UserDb
 from app.schemas.user_schema import SignUpSchema
 
-dictConfig(LogConfig().model_dump())
-logger = logging.getLogger("expense_tracker")
+logger = setup_logger()
 
 
 async def create(

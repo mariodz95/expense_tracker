@@ -1,6 +1,4 @@
-import logging
 from contextlib import asynccontextmanager
-from logging.config import dictConfig
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,10 +6,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import get_config
 from app.routers.router import router
 
-from .logger_config import LogConfig
+from .logger_config import setup_logger
 
-dictConfig(LogConfig().model_dump())
-logger = logging.getLogger("uvicorn.error")
+logger = setup_logger()
 
 
 def app_settings() -> dict:

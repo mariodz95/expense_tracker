@@ -1,4 +1,5 @@
 import uuid as uuid_pkg
+from datetime import datetime
 from typing import TYPE_CHECKING, Optional
 
 from pydantic import EmailStr
@@ -31,6 +32,9 @@ class UserDb(BaseModelDb, table=True):
     username: str = Field(sa_column=Column("username", VARCHAR, unique=True))
     email: EmailStr = Field(sa_column=Column("email", VARCHAR, unique=True))
     password_hash: str = Field(nullable=False)
+    first_name: str = Field(nullable=False)
+    last_name: str = Field(nullable=False)
+    dob: datetime = Field(nullable=False)
     budgets: list["BudgetDb"] = Relationship(
         back_populates="users", link_model=UserBudgetLink
     )

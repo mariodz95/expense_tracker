@@ -1,39 +1,32 @@
-from pydantic import BaseModel
+import json
+import logging
+from datetime import datetime
 
 
-class LogConfig(BaseModel):
-    """Logging configuration to be set for the server."""
+class JsonFormatter(logging.Formatter):
+    def format(self, record):
+        log_record = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "level": record.levelname,
+            "message": record.getMessage(),
+            "file": f"{record.pathname}:{record.lineno}",
+        }
 
-    LOGGER_NAME: str = "expense_tracker"
-    LOG_FORMAT: str = "%(levelprefix)s | %(asctime)s | %(message)s"
-    LOG_LEVEL: str = "DEBUG"
+        if record.exc_info:
+            log_record["exception"] = self.formatException(record.exc_info)
 
-    version: int = 1
-    disable_existing_loggers: bool = False
-    formatters: dict = {
-        "default": {
-            "()": "uvicorn.logging.DefaultFormatter",
-            "fmt": LOG_FORMAT,
-            "datefmt": "%Y-%m-%d %H:%M:%S",
-        },
-        "detailed": {
-            "format": "%(asctime)s | %(levelname)s | %(name)s | %(message)s | %(exc_info)s",
-            "datefmt": "%Y-%m-%d %H:%M:%S",
-        },
-    }
-    handlers: dict = {
-        "default": {
-            "formatter": "default",
-            "class": "logging.StreamHandler",
-            "stream": "ext://sys.stderr",
-        },
-        "detailed": {
-            "formatter": "detailed",
-            "class": "logging.StreamHandler",
-            "stream": "ext://sys.stderr",
-        },
-    }
-    loggers: dict = {
-        LOGGER_NAME: {"handlers": ["default"], "level": LOG_LEVEL},
-        "exception": {"handlers": ["detailed"], "level": LOG_LEVEL},
-    }
+        return json.dumps(log_record)
+
+
+def setup_logger(name: str = "fastapi-logger") -> logging.Logger:
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.ERROR)
+
+    if logger.hasHandlers():
+        logger.handlers.clear()
+
+    handler = logging.StreamHandler()
+    handler.setFormatter(JsonFormatter())
+
+    logger.addHandler(handler)
+    return logger
