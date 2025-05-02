@@ -3,11 +3,11 @@ services:
     build:
       context: ..
       dockerfile: ./docker/Dockerfile
-    command:  bash -c "alembic upgrade head && uvicorn --reload --reload-dir ./app app.main:app --host 0.0.0.0 --port 7000" 
+    command:  bash -c "alembic upgrade head && uvicorn --reload --reload-dir ./app --reload-dir ./tests app.main:app --host 0.0.0.0 --port 7000" 
     ports:
       - "7000:7000"
     volumes:
-      - ../:/app:cached
+     - ../:/app:cached
     environment:
       - WATCHFILES_FORCE_POLLING=true
     env_file:

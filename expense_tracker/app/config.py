@@ -9,7 +9,8 @@ class Config(BaseModel):
     jwt_algorithm: str
     jwt_token_access_name: str
     jwt_token_refresh_name: str
-    jwt_expiration: int
+    jwt_access_expiration: int
+    jwt_refresh_expiration: int
     jwt_secret: str
     postgres_user: str
     postgres_password: str

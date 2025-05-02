@@ -8,7 +8,7 @@ from tests.factories.user_factory import UserDbFactory, UserSchemaFactory
 
 
 async def test_create_returns_created_model(session_fixture):
-    user_schema = UserSchemaFactory()
+    user_schema = UserSchemaFactory.build()
     password_hash = "password_hash"
 
     db_user = await user_repository.create(user_schema, session_fixture, password_hash)
@@ -21,7 +21,7 @@ async def test_create_returns_created_model(session_fixture):
 
 
 async def test_create_catch_exception(mocker):
-    user_schema = UserSchemaFactory()
+    user_schema = UserSchemaFactory.build()
     password_hash = "password_hash"
     session = AsyncSession()
 

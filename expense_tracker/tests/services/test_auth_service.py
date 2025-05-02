@@ -9,7 +9,7 @@ from tests.factories.user_factory import UserDbFactory, UserSchemaFactory
 
 
 async def test_create_user_returns_expected_response(mocker, session_fixture):
-    user = UserSchemaFactory()
+    user = UserSchemaFactory.build()
 
     create_mock = mocker.patch(
         "app.services.auth_service.user_service.create",
@@ -23,7 +23,7 @@ async def test_create_user_returns_expected_response(mocker, session_fixture):
 
 
 async def test_create_user_calls_user_service_once(mocker, session_fixture):
-    user = UserSchemaFactory()
+    user = UserSchemaFactory.build()
 
     create_mock = mocker.patch(
         "app.services.auth_service.user_service.create",
@@ -42,7 +42,7 @@ async def test_login(mocker, session_fixture):
     expected = {"access_token": "token", "refresh_token": "token", "user": user_schema}
 
     user_service_get_mock = mocker.patch(
-        "app.services.auth_service.user_service.get",
+        "app.services.auth_service.user_repository.get",
         AsyncMock(return_value=db_user),
     )
     generate_token_mock = mocker.patch(
@@ -56,7 +56,7 @@ async def test_login(mocker, session_fixture):
 
     response = await auth_service.login(credentials, session_fixture)
 
-    user_service_get_mock.assert_called_once_with(credentials, session_fixture)
+    user_service_get_mock.assert_called_once_with(credentials.email, session_fixture)
     verify_password_mock.assert_called_once_with(
         credentials.password, db_user.password_hash
     )

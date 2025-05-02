@@ -1,6 +1,6 @@
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 class JsonFormatter(logging.Formatter):
@@ -27,6 +27,5 @@ def setup_logger(name: str = "fastapi-logger") -> logging.Logger:
 
     handler = logging.StreamHandler()
     handler.setFormatter(JsonFormatter())
-
     logger.addHandler(handler)
     return logger

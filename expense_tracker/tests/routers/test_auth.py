@@ -32,7 +32,7 @@ def test_signup_returns_expected_json(client, mocker, sign_up_payload):
 
 
 def test_login(client, mocker):
-    user = UserSchemaFactory()
+    user = UserSchemaFactory.build()
     user.password = SecretStr("password")
 
     user_dict = user.model_dump()

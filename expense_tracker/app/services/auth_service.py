@@ -1,6 +1,8 @@
 from fastapi.exceptions import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.enums import JwtTokenClaim
+from app.repositories import user_repository
 from app.schemas.user_schema import (SignUpSchema, UserLoginSchema,
                                      UserOutputSchema)
 from app.services import user_service
@@ -14,13 +16,13 @@ async def create_user(user: SignUpSchema, session: AsyncSession) -> UserOutputSc
 async def login(
     user_credentials: UserLoginSchema, session: AsyncSession
 ) -> UserOutputSchema:
-    user = await user_service.get(user_credentials, session)
+    user = await user_repository.get(user_credentials.email, session)
 
     if not verify_password(user_credentials.password, user.password_hash):
         raise HTTPException(401, detail="Invalid email or password.")
 
-    access_token = generate_token(user, "ACCESS_TOKEN")
-    refresh_token = generate_token(user, "REFRESH_TOKEN")
+    access_token = generate_token(user, JwtTokenClaim.ACCESS_TOKEN)
+    refresh_token = generate_token(user, JwtTokenClaim.REFRESH_TOKEN)
 
     return {
         "access_token": access_token,

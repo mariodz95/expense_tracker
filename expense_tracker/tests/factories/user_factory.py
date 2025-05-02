@@ -1,23 +1,29 @@
 from datetime import datetime, timezone
 from uuid import uuid4
 
-import factory
+from factory import Factory, Faker, LazyFunction
+from pydantic import SecretStr
 
 from app.models.user_model import UserDb
 from app.schemas.user_schema import UserSchema
 from tests.factories.initial_model_factory import InitialBaseFactory
 
 
-class UserSchemaFactory(factory.Factory):
+class UserSchemaFactory(Factory):
     class Meta:
         model = UserSchema
 
-    username = factory.Faker("pystr")
-    email = factory.Faker("email")
-    password = factory.Faker("pystr")
-    first_name = factory.Faker("pystr")
-    last_name = factory.Faker("pystr")
+    id = LazyFunction(uuid4)
+    username = Faker("pystr")
+    email = Faker("email")
+    password = SecretStr(Faker("password"))
+    first_name = Faker("pystr")
+    last_name = Faker("pystr")
     dob = datetime.now(timezone.utc).replace(tzinfo=None)
+
+    @classmethod
+    def _build(cls, model_class, *args, **kwargs):
+        return model_class.model_construct(**kwargs)
 
 
 class UserDbFactory(InitialBaseFactory):
@@ -25,9 +31,9 @@ class UserDbFactory(InitialBaseFactory):
         model = UserDb
 
     id = uuid4()
-    username = factory.Faker("pystr")
-    email = factory.Faker("email")
-    password_hash = factory.Faker("pystr")
-    first_name = factory.Faker("pystr")
-    last_name = factory.Faker("pystr")
+    username = Faker("pystr")
+    email = Faker("email")
+    password_hash = Faker("pystr")
+    first_name = Faker("pystr")
+    last_name = Faker("pystr")
     dob = datetime.now(timezone.utc).replace(tzinfo=None)

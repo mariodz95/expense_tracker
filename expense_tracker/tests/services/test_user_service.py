@@ -6,7 +6,7 @@ from tests.factories.user_factory import UserDbFactory, UserSchemaFactory
 
 
 async def test_create_returns_expected_response(mocker, session_fixture):
-    user = UserSchemaFactory()
+    user = UserSchemaFactory.build()
     db_user = UserDbFactory.build()
     expected = UserOutputSchema(**db_user.model_dump())
 
@@ -24,7 +24,7 @@ async def test_create_returns_expected_response(mocker, session_fixture):
 
 
 async def test_create_calls_auth_utils_once(mocker, session_fixture):
-    user = UserSchemaFactory()
+    user = UserSchemaFactory.build()
     db_user = UserDbFactory.build()
 
     utils_get_password_hash_mock = mocker.patch(
@@ -43,7 +43,7 @@ async def test_create_calls_auth_utils_once(mocker, session_fixture):
 
 
 async def test_create_calls_user_repository_once(mocker, session_fixture):
-    user = UserSchemaFactory()
+    user = UserSchemaFactory.build()
     db_user = UserDbFactory.build()
 
     mocker.patch(

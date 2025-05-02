@@ -6,6 +6,7 @@ from jwt import InvalidTokenError
 from passlib.context import CryptContext
 
 from app.config import get_config
+from app.enums import JwtTokenClaim
 from app.schemas.user_schema import UserSchema
 
 config = get_config()
@@ -21,14 +22,22 @@ def get_password_hash(password) -> str:
 
 
 def generate_token(user: UserSchema, claim: str):
-    expire_at = datetime.now(timezone.utc) + timedelta(minutes=config.jwt_expiration)
     payload = {
-        "sub": user.email,
+        "sub": str(user.id),
         "claim": claim,
-        "exp": expire_at,
+        "exp": token_expire_at(claim=claim),
     }
 
     return jwt.encode(payload, config.jwt_secret, algorithm=config.jwt_algorithm)
+
+
+def token_expire_at(claim: str) -> datetime:
+    jwt_expiration = config.jwt_access_expiration
+
+    if claim == JwtTokenClaim.REFRESH_TOKEN:
+        jwt_expiration = config.jwt_refresh_expiration
+
+    return datetime.now(timezone.utc) + timedelta(minutes=jwt_expiration)
 
 
 def decode_token(token: str):

@@ -30,7 +30,7 @@ def test_get_password_hash(mocker):
 
 
 def test_generate_token(mocker):
-    user = UserSchemaFactory()
+    user = UserSchemaFactory.build()
     token = "token"
     mocker.patch(
         "app.utils.auth_utils.jwt.encode",
