@@ -10,7 +10,6 @@ httpx
 isort
 mutmut
 orjson
-passlib
 pydantic[email]
 pyjwt
 pytest

@@ -15,12 +15,12 @@ class JsonFormatter(logging.Formatter):
         if record.exc_info:
             log_record["exception"] = self.formatException(record.exc_info)
 
-        return json.dumps(log_record)
+        return json.dumps(log_record, default=str)
 
 
-def setup_logger(name: str = "fastapi-logger") -> logging.Logger:
+def setup_logger(name: str = "fastapi-logger", level=logging.INFO) -> logging.Logger:
     logger = logging.getLogger(name)
-    logger.setLevel(logging.ERROR)
+    logger.setLevel(level)
 
     if logger.hasHandlers():
         logger.handlers.clear()
@@ -28,4 +28,6 @@ def setup_logger(name: str = "fastapi-logger") -> logging.Logger:
     handler = logging.StreamHandler()
     handler.setFormatter(JsonFormatter())
     logger.addHandler(handler)
+    logger.propagate = False
+
     return logger

@@ -1,3 +1,5 @@
+import logging
+
 from fastapi.exceptions import HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -7,7 +9,7 @@ from app.logger_config import setup_logger
 from app.models.user_model import UserDb
 from app.schemas.user_schema import SignUpSchema
 
-logger = setup_logger()
+logger = setup_logger(level=logging.INFO)
 
 
 async def create(

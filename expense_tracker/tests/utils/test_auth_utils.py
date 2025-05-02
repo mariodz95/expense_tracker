@@ -18,15 +18,10 @@ def test_verify_password():
 
 def test_get_password_hash(mocker):
     password = "password"
-    password_hash = "$2b$12$qSRM/dGGXgLVF11f//KDBejTHlRTkbj1v/GfHjJhKRErEWU2OBIBm"
-    mocker.patch(
-        "app.utils.auth_utils.pwd_context.hash",
-        Mock(return_value=password_hash),
-    )
 
     result = auth_utils.get_password_hash(password)
 
-    assert result == password_hash
+    assert auth_utils.verify_password(password, result)
 
 
 def test_generate_token(mocker):

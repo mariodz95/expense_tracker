@@ -1,3 +1,4 @@
+import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -8,7 +9,7 @@ from app.routers.router import router
 
 from .logger_config import setup_logger
 
-logger = setup_logger()
+logger = setup_logger(level=logging.INFO)
 
 
 def app_settings() -> dict:
