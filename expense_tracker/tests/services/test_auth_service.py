@@ -58,7 +58,7 @@ async def test_login_raise_exception_invalid_password(mocker, session_fixture):
     db_user = UserDbFactory.build()
 
     mocker.patch(
-        "app.services.auth_service.user_service.get",
+        "app.services.auth_service.user_repository.get",
         AsyncMock(return_value=db_user),
     )
     mocker.patch(
