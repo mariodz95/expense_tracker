@@ -18,7 +18,7 @@ async def signup(
     return await auth_service.create_user(user=user, session=session)
 
 
-@router.post("/login", response_model=dict)
+@router.post("/login", response_model=UserOutputSchema)
 async def login(
     user_credentials: UserLoginSchema,
     response: Response,
@@ -31,4 +31,4 @@ async def login(
     )
     response.headers[config.jwt_token_refresh_name] = auth_response["refresh_token"]
 
-    return {"user": auth_response["user"]}
+    return UserOutputSchema(**auth_response["user"].model_dump())

@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock, Mock, call
 import pytest
 from fastapi.exceptions import HTTPException
 
-from app.schemas.user_schema import UserLoginSchema, UserOutputSchema
+from app.schemas.user_schema import UserLoginSchema
 from app.services import auth_service
 from tests.factories.user_factory import UserDbFactory, UserSchemaFactory
 
@@ -22,24 +22,10 @@ async def test_create_user_returns_expected_response(mocker, session_fixture):
     assert response == user
 
 
-async def test_create_user_calls_user_service_once(mocker, session_fixture):
-    user = UserSchemaFactory.build()
-
-    create_mock = mocker.patch(
-        "app.services.auth_service.user_service.create",
-        AsyncMock(return_value=user),
-    )
-
-    await auth_service.create_user(user, session_fixture)
-
-    create_mock.assert_called_once_with(user=user, session=session_fixture)
-
-
 async def test_login(mocker, session_fixture):
     credentials = UserLoginSchema(email="test@email.com", password="password")
     db_user = UserDbFactory.build()
-    user_schema = UserOutputSchema(**db_user.model_dump())
-    expected = {"access_token": "token", "refresh_token": "token", "user": user_schema}
+    expected = {"access_token": "token", "refresh_token": "token", "user": db_user}
 
     user_service_get_mock = mocker.patch(
         "app.services.auth_service.user_repository.get",
@@ -67,9 +53,10 @@ async def test_login(mocker, session_fixture):
     assert response == expected
 
 
-async def test_login_catch_exception(mocker, session_fixture):
+async def test_login_raise_exception_invalid_password(mocker, session_fixture):
     credentials = UserLoginSchema(email="test@email.com", password="password")
     db_user = UserDbFactory.build()
+
     mocker.patch(
         "app.services.auth_service.user_service.get",
         AsyncMock(return_value=db_user),

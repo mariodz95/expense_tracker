@@ -3,6 +3,7 @@ from unittest.mock import AsyncMock
 import orjson
 from pydantic import SecretStr
 
+from app.schemas.user_schema import UserOutputSchema
 from tests.factories.user_factory import UserSchemaFactory
 
 
@@ -34,22 +35,19 @@ def test_signup_returns_expected_json(client, mocker, sign_up_payload):
 def test_login(client, mocker):
     user = UserSchemaFactory.build()
     user.password = SecretStr("password")
-
-    user_dict = user.model_dump()
-    user_dict["password"] = user.password.get_secret_value()
-    user_json = orjson.dumps(user_dict).decode()
-    user_json_dict = orjson.loads(user_json)
+    output_schema = UserOutputSchema(**user.model_dump())
+    expected_json = orjson.dumps(output_schema.model_dump()).decode()
+    expected_normalized = orjson.loads(expected_json)
 
     user_credentials = {
-        "email": user_dict["email"],
+        "email": user.email,
         "password": user.password.get_secret_value(),
     }
     auth_service_response = {
         "access_token": "access_token",
         "refresh_token": "refresh_token",
-        "user": user_dict,
+        "user": user,
     }
-    expected = {"user": user_json_dict}
 
     mocker.patch(
         "app.routers.auth.auth_service.login",
@@ -61,4 +59,4 @@ def test_login(client, mocker):
     assert actual.status_code == 200
     assert actual.headers["x-refresh-token"] == "refresh_token"
     assert actual.cookies["expense_jwt_token"] == "access_token"
-    assert actual.json() == expected
+    assert actual.json() == expected_normalized

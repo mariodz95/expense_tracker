@@ -13,9 +13,7 @@ async def create_user(user: SignUpSchema, session: AsyncSession) -> UserOutputSc
     return await user_service.create(user=user, session=session)
 
 
-async def login(
-    user_credentials: UserLoginSchema, session: AsyncSession
-) -> UserOutputSchema:
+async def login(user_credentials: UserLoginSchema, session: AsyncSession) -> dict:
     user = await user_repository.get(user_credentials.email, session)
 
     if not verify_password(user_credentials.password, user.password_hash):
@@ -27,7 +25,7 @@ async def login(
     return {
         "access_token": access_token,
         "refresh_token": refresh_token,
-        "user": UserOutputSchema(**user.model_dump()),
+        "user": user,
     }
 
 
