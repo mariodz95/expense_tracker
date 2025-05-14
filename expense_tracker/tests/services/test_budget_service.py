@@ -1,4 +1,4 @@
-from unittest.mock import AsyncMock, Mock
+from unittest.mock import AsyncMock
 
 from app.schemas.budget_schema import BudgetSchema
 from app.services import budget_service
@@ -13,12 +13,8 @@ async def test_create(mocker, session_fixture):
     expected = BudgetSchema(**budget_db.model_dump())
     token = {"sub": "user@email.com"}
 
-    decode_token_mock = mocker.patch(
-        "app.services.budget_service.decode_token",
-        Mock(return_value=token),
-    )
     user_repository_get_mock = mocker.patch(
-        "app.services.budget_service.user_repository.get",
+        "app.services.budget_service.user_repository.get_by_id",
         AsyncMock(return_value=user),
     )
     budget_repository_create_mock = mocker.patch(
@@ -26,12 +22,11 @@ async def test_create(mocker, session_fixture):
         AsyncMock(return_value=budget_db),
     )
 
-    response = await budget_service.create(budget, "token", session_fixture)
+    response = await budget_service.create(budget, token, session_fixture)
 
     assert response == expected
-    decode_token_mock.assert_called_once_with(token="token")
     user_repository_get_mock.assert_called_once_with(
-        email=token["sub"], session=session_fixture
+        id=token["sub"], session=session_fixture
     )
     budget_repository_create_mock.assert_called_once_with(
         budget=budget, user=user, session=session_fixture

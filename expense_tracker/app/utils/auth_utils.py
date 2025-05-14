@@ -47,5 +47,5 @@ def decode_token(token: str):
         return jwt.decode(
             jwt=token, key=config.jwt_secret, algorithms=config.jwt_algorithm
         )
-    except InvalidTokenError as e:
-        raise HTTPException(401, detail=f"Invalid token. {e}.")
+    except InvalidTokenError:
+        raise HTTPException(401, detail="Unauthorized request.")

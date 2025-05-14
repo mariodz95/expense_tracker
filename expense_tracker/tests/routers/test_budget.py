@@ -1,22 +1,29 @@
 from unittest.mock import AsyncMock
 
-import orjson
 
-from tests.factories.budget_factory import BudgetDbFactory
-
-
-async def test_create(client, mocker):
+async def test_create(auth_client, mocker):
     json_data = {"name": "home budget", "description": "home budget"}
-    budget = BudgetDbFactory.build()
-    budget_json = orjson.dumps(budget.model_dump()).decode()
-    budget_json_dict = orjson.loads(budget_json)
-    expected = budget_json_dict
+    expected = {"name": "home budget", "description": "home budget"}
 
     mocker.patch(
-        "app.routers.budget.budget_service.create", AsyncMock(return_value=budget)
+        "app.routers.budget.budget_service.create", AsyncMock(return_value=expected)
+    )
+
+    actual = auth_client.post("/budget/create", json=json_data)
+
+    assert actual.status_code == 200
+    assert actual.json() == expected
+
+
+async def test_create_without_token_unauthorized(client, mocker):
+    json_data = {"name": "home budget", "description": "home budget"}
+    expected = {"detail": "Unauthorized request."}
+
+    mocker.patch(
+        "app.routers.budget.budget_service.create", AsyncMock(return_value=expected)
     )
 
     actual = client.post("/budget/create", json=json_data)
 
-    assert actual.status_code == 200
+    assert actual.status_code == 401
     assert actual.json() == expected

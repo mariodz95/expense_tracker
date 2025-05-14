@@ -9,6 +9,7 @@ from sqlalchemy.sql import text
 from sqlmodel import SQLModel
 from sqlmodel.pool import StaticPool
 
+from app.dependencies import authorize_request
 from app.main import app
 from tests.utilities import create_config_dict
 
@@ -16,6 +17,17 @@ from tests.utilities import create_config_dict
 @pytest.fixture
 def client():
     return TestClient(app)
+
+
+@pytest.fixture
+def auth_client():
+    def mock_authorize_request():
+        return {"user_id": "mock-user"}
+
+    app.dependency_overrides[authorize_request] = mock_authorize_request
+    client = TestClient(app)
+    yield client
+    app.dependency_overrides.clear()
 
 
 @pytest.fixture

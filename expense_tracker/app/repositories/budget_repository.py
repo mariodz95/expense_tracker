@@ -1,14 +1,26 @@
+import logging
+
+from fastapi.exceptions import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.logger_config import setup_logger
 from app.models.budget_model import BudgetDb
 from app.models.user_model import UserDb
 from app.schemas.budget_schema import BudgetSchema
 
+logger = setup_logger(level=logging.INFO)
+
 
 async def create(budget: BudgetSchema, user: UserDb, session: AsyncSession) -> BudgetDb:
-    budget_db = BudgetDb(**budget.model_dump(), users=[user])
-    session.add(budget_db)
-    await session.commit()
-    await session.refresh(budget_db)
+    try:
+        budget_db = BudgetDb(
+            **budget.model_dump(), users=[user], owner=user.id, created_by=str(user.id)
+        )
+        session.add(budget_db)
+        await session.commit()
+        await session.refresh(budget_db)
 
-    return budget_db
+        return budget_db
+    except Exception as e:
+        logger.error(f"Error while inserting budget into db: {e}")
+        raise HTTPException(409, detail="There is already budget with given name.")

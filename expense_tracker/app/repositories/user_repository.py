@@ -15,7 +15,9 @@ logger = setup_logger(level=logging.INFO)
 async def create(
     user: SignUpSchema, session: AsyncSession, password_hash: str
 ) -> UserDb:
-    db_user = UserDb(password_hash=password_hash, **user.model_dump())
+    db_user = UserDb(
+        password_hash=password_hash, **user.model_dump(), created_by="SYSTEM"
+    )
     try:
         session.add(db_user)
         await session.commit()
@@ -38,5 +40,13 @@ async def get(email: str, session: AsyncSession) -> UserDb:
     user = result.scalar()
     if not user:
         raise HTTPException(404, detail="Invalid email or password.")
+
+    return user
+
+
+async def get_by_id(id: str, session: AsyncSession) -> UserDb:
+    user = await session.get(UserDb, id)
+    if not user:
+        raise HTTPException(404, detail="Invalid user id.")
 
     return user

@@ -30,7 +30,7 @@ class UserDbFactory(InitialBaseFactory):
     class Meta:
         model = UserDb
 
-    id = uuid4()
+    created_by = "SYSTEM"
     username = Faker("pystr")
     email = Faker("email")
     password_hash = Faker("pystr")

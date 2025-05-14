@@ -14,11 +14,17 @@ class InitialBaseFactory(SQLAlchemyModelFactory):
         abstract = True
         sqlalchemy_session = session
 
+    created_by = "test"
+
     @classmethod
     def _create(cls, model_class, *args, **kwargs):
+        session = kwargs.pop("session", cls._meta.sqlalchemy_session)
+
         async def create_async():
-            session.add(model_class(*args, **kwargs))
+            obj = model_class(*args, **kwargs)
+            session.add(obj)
             await session.commit()
-            return model_class(*args, **kwargs)
+            await session.refresh(obj)
+            return obj
 
         return create_async()
