@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 import pytest
 from fastapi.exceptions import HTTPException
 from sqlalchemy.exc import SQLAlchemyError
@@ -77,3 +79,25 @@ async def test_get_catch_exception(session_fixture):
     exception = exc_info.value
     assert exception.status_code == 404
     assert exception.detail == "Invalid email or password."
+
+
+async def test_get_by_id(session_fixture):
+    expected = await UserDbFactory.create(email="email2@test.com")
+
+    result = await user_repository.get_by_id(id=expected.id, session=session_fixture)
+
+    assert result.email == expected.email
+    assert result.username == expected.username
+    assert result.password_hash == expected.password_hash
+    assert result.id == expected.id
+
+
+async def test_get_no_matching_user_returns_exception(session_fixture):
+    await UserDbFactory.create(email="email@test.com")
+
+    with pytest.raises(HTTPException) as exc_info:
+        await user_repository.get_by_id(id=uuid4(), session=session_fixture)
+
+    exception = exc_info.value
+    assert exception.status_code == 404
+    assert exception.detail == "Invalid user id."

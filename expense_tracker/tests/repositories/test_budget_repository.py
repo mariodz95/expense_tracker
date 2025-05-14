@@ -24,3 +24,15 @@ async def test_create_duplicate_name_raises_exception(session_fixture):
 
     with pytest.raises(HTTPException, match="There is already budget with given name."):
         await budget_repository.create(budget_schema, user_db, session_fixture)
+
+
+async def test_create_duplicate_name_raises_status_code_409(session_fixture):
+    user_db = await UserDbFactory.create(session=session_fixture)
+    await BudgetDbFactory.create(session=session_fixture, name="test", owner=user_db.id)
+    budget_schema = BudgetSchemaFactory(name="test")
+
+    with pytest.raises(
+        HTTPException, match="There is already budget with given name."
+    ) as exc_info:
+        await budget_repository.create(budget_schema, user_db, session_fixture)
+        assert exc_info.value.status_code == 409
