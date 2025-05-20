@@ -65,6 +65,7 @@ class BudgetDb(BaseModelDb, table=True):
     name: str
     owner: uuid_pkg.UUID = Field(foreign_key="users.id", nullable=False, index=True)
     description: str
+    user_id: uuid_pkg.UUID = Field(foreign_key="users.id")
     users: list["UserDb"] = Relationship(
         back_populates="budgets", link_model=UserBudgetLink
     )
