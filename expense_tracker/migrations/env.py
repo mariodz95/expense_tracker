@@ -6,8 +6,14 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import AsyncEngine
 from sqlmodel import SQLModel
-from app.models.user_model import UserDb
-from app.models.budget_model import BaseModelDb
+from app.database.models import (
+    UserDb,
+    BaseModelDb,
+    ExpenseDb,
+    ExpenseCategoryDb,
+    BudgetDb,
+)
+
 
 from alembic import context
 

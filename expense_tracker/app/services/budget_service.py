@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.budget_model import BudgetDb
+from app.database.models import BudgetDb
 from app.repositories import budget_repository, user_repository
 from app.schemas.budget_schema import BudgetSchema
 

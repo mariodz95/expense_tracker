@@ -3,9 +3,8 @@ import logging
 from fastapi.exceptions import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.database.models import BudgetDb, UserDb
 from app.logger_config import setup_logger
-from app.models.budget_model import BudgetDb
-from app.models.user_model import UserDb
 from app.schemas.budget_schema import BudgetSchema
 
 logger = setup_logger(level=logging.INFO)

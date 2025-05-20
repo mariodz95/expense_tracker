@@ -4,7 +4,7 @@ from uuid import uuid4
 from factory import Factory, Faker, LazyFunction
 from pydantic import SecretStr
 
-from app.models.user_model import UserDb
+from app.database.models import UserDb
 from app.schemas.user_schema import UserSchema
 from tests.factories.initial_model_factory import InitialBaseFactory
 
