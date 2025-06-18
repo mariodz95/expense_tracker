@@ -30,6 +30,7 @@ class UserDbFactory(InitialBaseFactory):
     class Meta:
         model = UserDb
 
+    id = LazyFunction(uuid4)
     created_by = "SYSTEM"
     username = Faker("pystr")
     email = Faker("email")

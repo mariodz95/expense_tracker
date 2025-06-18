@@ -19,7 +19,9 @@ async def test_create(session_fixture):
 
 async def test_create_duplicate_name_raises_exception(session_fixture):
     user_db = await UserDbFactory.create(session=session_fixture)
-    await BudgetDbFactory.create(session=session_fixture, name="test", owner=user_db.id)
+    await BudgetDbFactory.create(
+        session=session_fixture, name="test", owner=user_db.id, user_id=user_db.id
+    )
     budget_schema = BudgetSchemaFactory(name="test")
 
     with pytest.raises(HTTPException, match="There is already budget with given name."):
@@ -28,7 +30,9 @@ async def test_create_duplicate_name_raises_exception(session_fixture):
 
 async def test_create_duplicate_name_raises_status_code_409(session_fixture):
     user_db = await UserDbFactory.create(session=session_fixture)
-    await BudgetDbFactory.create(session=session_fixture, name="test", owner=user_db.id)
+    await BudgetDbFactory.create(
+        session=session_fixture, name="test", owner=user_db.id, user_id=user_db.id
+    )
     budget_schema = BudgetSchemaFactory(name="test")
 
     with pytest.raises(
